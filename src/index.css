@@ -26,9 +26,16 @@ html, body {
 body{
   background: #F2F7FB;
 }
+.container {
+  max-width: 95% !important; /* Container'ın genişliğini %100 yaparak sınırları kaldırın */
+  padding: 0 !important; /* Padding değerini sıfırlayın */
+}
 
 @media screen and (max-width:768px) {
   .container{
       margin: 0 20px;
   }
+}
+.accordionCard {
+  margin-bottom: 10px;
 }
