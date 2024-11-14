@@ -12,13 +12,15 @@ const CategoryPage = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isParametrModal, setIsParametrModal] = useState(false);
   const [parameters, setParameters] = useState([]);
+  const [selectedParameterId, setSelectedParameterId] = useState(null); // Yeni state
   const navigate = useNavigate();
 
   const handleClickModal = () => {
     setIsModalOpen((prev) => !prev);
   };
-  const handleClickParametrModal = () => {
-    setIsParametrModal((prev) => !prev);
+  const handleClickParametrModal = (parameterId) => {
+    setSelectedParameterId(parameterId); // parameterId-ni yadda saxla
+    setIsParametrModal(true);
   };
 
   const handleCloseModal = () => {
@@ -26,6 +28,7 @@ const CategoryPage = ({ id }) => {
   };
   const CloseParametrModal = () => {
     setIsParametrModal(false);
+    setSelectedParameterId(null); // modal bağlandıqda parameterId-ni sıfırla
   };
 
   const handleDelete = async (parameterId) => {
@@ -117,7 +120,7 @@ const CategoryPage = ({ id }) => {
                       onClick={() => handleDelete(param.parameterId)}
                     />
                     {param.parameterTypeTitle === "select" && (
-                      <FaMask className={style.componentsPage_bottom_main_iconBox_icon} onClick={handleClickParametrModal}/>
+                      <FaMask className={style.componentsPage_bottom_main_iconBox_icon} onClick={() => handleClickParametrModal(param.parameterId)}/>
                     )}
                   </div>
                 </div>
@@ -133,7 +136,7 @@ const CategoryPage = ({ id }) => {
       )}
       {isParametrModal && (
         <div className={style.modalOverlay}>
-          <ParametrsModal onClose={CloseParametrModal} />
+          <ParametrsModal onClose={CloseParametrModal} parameterId={selectedParameterId} />
         </div>
       )}
     </div>

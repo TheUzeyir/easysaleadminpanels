@@ -5,7 +5,6 @@ import Header from '../../../layout/header/Header';
 import style from './parametrType.module.css';
 import ComponentsUpdate from '../../categoryComonents/componentsUpdate/ComponentsUpdate';
 import { useNavigate } from 'react-router';
-
 const ParametrType = () => {
   const [deleteBox, setDeleteBox] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -14,7 +13,6 @@ const ParametrType = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate=useNavigate()
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -116,7 +114,6 @@ const ParametrType = () => {
           </div>
         </div>
       </div>
-
       {isModalOpen && selectedItem && (
         <div className={style.modalOverlay}>
           <ComponentsUpdate 
