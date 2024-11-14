@@ -9,23 +9,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Mask = () => {
   const navigate = useNavigate();
   const [parameters, setParameters] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchParameters = async () => {
       setLoading(true);
       try {
+        // Parametreleri al
         const response = await axios.get('http://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters');
         const data = response.data.data;
 
+        // Select parametreleri filtrele
         const selectParameters = data.filter(param => param.parameterTypeTitle === "select");
 
+        // Parametreler ve maskeleri almak için
         const parametersWithMasks = await Promise.all(
           selectParameters.map(async (param) => {
             try {
-              const maskResponse = await axios.get(`http://restartbaku-001-site4.htempurl.com/api/ParameterMask/get-parameter-mask/${param.parameterId}`);
-              const masksData = maskResponse.data.data.parameterMaskTranslates || [];
-              return { ...param, masks: masksData.map(mask => mask.parameterMaskData) };
+              // Maskeleri al
+              const maskResponse = await axios.get(`http://restartbaku-001-site4.htempurl.com/api/ParameterMask/get-all-parameter-masks-by-parameter/${param.parameterId}`);
+              
+              // Konsolda API cevabını yazdır
+              console.log(`API Response for parameter ${param.parameterId}:`, maskResponse.data);
+
+              const masksData = maskResponse.data.data || [];
+              // Parametreye maskeleri ekle
+              return { ...param, masks: masksData.map(mask => ({ id: mask.parameterMaskId, title: mask.parameterMaskTitle })) };
             } catch (error) {
               console.error(`Error fetching masks for parameter ${param.parameterId}:`, error);
               return { ...param, masks: [] };
@@ -33,16 +42,41 @@ const Mask = () => {
           })
         );
 
+        // Parametreleri state'e kaydet
         setParameters(parametersWithMasks);
       } catch (error) {
         console.error('Error fetching parameters:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchParameters();
   }, []);
+
+  const handleDeleteMask = async (parameterId, maskId) => {
+    try {
+      // Maskeyi sil
+      const deleteResponse = await axios.delete(`http://restartbaku-001-site4.htempurl.com/api/ParameterMask/delete-parameter-mask/${maskId}`);
+      
+      // Silme işleminden sonra parametreyi güncelle
+      setParameters(prevParameters =>
+        prevParameters.map(param => {
+          if (param.parameterId === parameterId) {
+            return {
+              ...param,
+              masks: param.masks.filter(mask => mask.id !== maskId) // Silinen maskeyi array'den çıkar
+            };
+          }
+          return param;
+        })
+      );
+
+      console.log(`Mask with id ${maskId} deleted successfully.`);
+    } catch (error) {
+      console.error('Error deleting mask:', error);
+    }
+  };
 
   return (
     <div className="componentsPage_container">
@@ -52,13 +86,13 @@ const Mask = () => {
           <p>Loading...</p>
         ) : (
           <>
-            <h5 className="componentsPage_title" style={{margin:"30px 5px"}}>ParametrMasks</h5>
+            <h5 className="componentsPage_title" style={{ margin: "30px 5px" }}>ParametrMasks</h5>
             <div className="componentsPage">
               <div className="componentsPage_bottom">
                 <Accordion>
                   {parameters.length > 0 ? (
                     parameters.map((param) => (
-                      <Card key={param.parameterId} className='accordionCard'>
+                      <Card key={param.parameterId} className="accordionCard">
                         <Accordion.Item eventKey={param.parameterId.toString()}>
                           <Accordion.Header>{param.parameterTitle}</Accordion.Header>
                           <Accordion.Body>
@@ -66,11 +100,12 @@ const Mask = () => {
                               {param.masks.length > 0 ? (
                                 param.masks.map((mask, index) => (
                                   <div key={index} className="componentsPage_bottom_main_maskItem mt-2">
-                                    <p className="maskTitle">{mask}</p>
+                                    <p className="maskTitle">{mask.title}</p>
                                     <div className="componentsPage_bottom_main_iconBox">
                                       <FaTrash
                                         className="componentsPage_bottom_main_iconBox_icon"
                                         title="Delete"
+                                        onClick={() => handleDeleteMask(param.parameterId, mask.id)} // Silme işlemi
                                       />
                                     </div>
                                   </div>
