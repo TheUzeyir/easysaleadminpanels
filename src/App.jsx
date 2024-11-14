@@ -1,13 +1,14 @@
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Main from "./page/main/Main"
-import ComponentsPage from "./components/componentsPages/component/Component"
-import ComponentsAdd from "./components/addcomponents/componentsAdd/ComponentsAdd"
+import ComponentsPage from "./components/categoryComonents/componentMain/Component"
+import ComponentsAdd from "./components/categoryComonents/componentsAdd/ComponentsAdd"
 import Login from "./page/login/Login"
-import UserInfo from "./components/componentsPages/userInfo/UserInfo"
-import Parametrs from "./components/componentsPages/parametrs/Parametrs"
-import ParametrAdd from "./components/addcomponents/parametrsAdd/ParametrAdd"
-import UsersPage from "./components/componentsPages/usersPage/UsersPage"
-import ParametrType from "./components/componentsPages/parametrtype/ParametrType"
+import UserInfo from "./components/userComponents/userInfo/UserInfo"
+import Parametrs from "./components/parametrComponents/parametrs/Parametrs"
+import ParametrAdd from "./components/parametrComponents/parametrsAdd/ParametrAdd"
+import UsersPage from "./components/userComponents/usersPage/UsersPage"
+import ParametrType from "./components/parametrTypeComponents/parametrtype/ParametrType"
+import Mask from "./components/maskComponents/mask/Mask"
 
 function App() {
 
@@ -22,8 +23,9 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/parametrs" element={<Parametrs/>}/>
         <Route path="/parametrAdd" element={<ParametrAdd/>}/>
-        <Route path="/users" element={<UsersPage/>}/>
+        <Route path="/users" element={<UsersPage/>}/> 
         <Route path="/parametrType" element={<ParametrType/>}/>
+        <Route path="/mask" element={<Mask/>}/>
       </Routes>
     </BrowserRouter>
     </>

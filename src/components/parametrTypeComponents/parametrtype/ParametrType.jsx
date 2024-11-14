@@ -3,7 +3,7 @@ import { FaPlus, FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import Header from '../../../layout/header/Header';
 import style from './parametrType.module.css';
-import ComponentsUpdate from '../../update/componentsUpdate/ComponentsUpdate';
+import ComponentsUpdate from '../../categoryComonents/componentsUpdate/ComponentsUpdate';
 import { useNavigate } from 'react-router';
 
 const ParametrType = () => {
@@ -105,10 +105,10 @@ const ParametrType = () => {
               dataList.map((item, index) => (
                 <div key={`${item.categoryId}-${index}`} className={style.componentsPage_bottom_main_container}>
                   <div className={`${style.componentsPage_bottom_main} ${deleteBox ? style.componentsPage_bottom_main_displayNone : ""}`}>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{item.parameterTypeId || 'N/A'}</p>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{item.parameterTypeTitle || 'N/A'}</p>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{item.parameterTypeStatus || 'N/A'}</p>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{item.parameterTypeWeight || 'N/A'}</p>
+                    <span className={style.componentsPage_bottom_main_productTitle_typeID}>{item.parameterTypeId || 'N/A'}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle_typeTitle}>{item.parameterTypeTitle || 'N/A'}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle_typeStatus}>{item.parameterTypeStatus || 'N/A'}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle_typeWeight}>{item.parameterTypeWeight || 'N/A'}</span>
                   </div>
                 </div>
               ))

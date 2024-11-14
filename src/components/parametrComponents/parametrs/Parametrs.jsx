@@ -101,12 +101,12 @@ const CategoryPage = ({ id }) => {
             <div className={style.componentsPage_bottom_main_container}>
               {parameters.map((param) => (
                 <div className={style.componentsPage_bottom_main} key={param.parameterId}>
-                  <p className={style.componentsPage_bottom_main_productTitle}>{param.parameterId}</p>
-                  <p className={style.componentsPage_bottom_main_productTitle}>{param.parentParameterId}</p>
-                  <p className={style.componentsPage_bottom_main_productTitle}>{param.parameterTitle}</p>
-                  <p className={style.componentsPage_bottom_main_productTitle}>{param.categoryTitle}</p>
-                  <p className={style.componentsPage_bottom_main_productTitle}>{param.parameterTypeTitle}</p>
-                  <p className={style.componentsPage_bottom_main_productTitle}>{param.parameterLogo}</p>
+                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterId}</span>
+                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parentParameterId}</span>
+                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTitle}</span>
+                  <span className={style.componentsPage_bottom_main_productTitle}>{param.categoryTitle}</span>
+                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTypeTitle}</span>
+                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterLogo}</span>
                   <div className={style.componentsPage_bottom_main_iconBox}>
                     <FaPenFancy
                       className={style.componentsPage_bottom_main_iconBox_icon}

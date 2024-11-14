@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../../layout/header/Header'
-import MainElement from '../../components/componentsPages/mainElement/MainElement'
+import MainElement from '../../components/mainElement/MainElement'
 
 const MAinPage = () => {
   return (

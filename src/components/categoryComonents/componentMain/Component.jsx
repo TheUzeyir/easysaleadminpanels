@@ -4,7 +4,7 @@ import { FaPenFancy, FaTrash } from 'react-icons/fa6';
 import axios from 'axios';
 import Header from '../../../layout/header/Header';
 import style from './component.module.css';
-import ComponentsUpdate from '../../update/componentsUpdate/ComponentsUpdate';
+import ComponentsUpdate from '../componentsUpdate/ComponentsUpdate';
 import { useNavigate } from 'react-router';
 
 const ComponentsPage = () => {
