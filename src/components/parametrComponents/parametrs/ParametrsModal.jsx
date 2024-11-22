@@ -4,16 +4,16 @@ import { IoCloseCircle } from "react-icons/io5";
 
 const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
   const [isSaving, setIsSaving] = useState(false);
-  const [parametrId] = useState(initialParameterId || ''); // Read-only parameterId
+  const [parametrId] = useState(initialParameterId || ''); 
   const [parameterMaskData, setParameterMaskData] = useState('');
-  const [parentId, setParentId] = useState(null); // Allow selection in dropdown
-  const [language, setLanguage] = useState('Azerbaijan'); // Default selection
+  const [parentId, setParentId] = useState(null);
+  const [language, setLanguage] = useState('Azerbaijan'); 
 
   const handleSave = async () => {
     setIsSaving(true);
 
     const data = {
-      parameterId: parametrId, // Uses the fixed id from initial state
+      parameterId: parametrId, 
       parentId,
       parameterMaskTranslates: [
         {
@@ -61,7 +61,7 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
             type="text"
             className={style.ParametrsModal_card_input}
             value={parametrId}
-            disabled // Makes parameterId input read-only
+            disabled 
           />
         </div>
         <div className={style.ParametrsModal_card}>
@@ -81,7 +81,7 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
             id="parentId"
             className={style.ParametrsModal_card_input}
             value={parentId || ''}
-            onChange={() => setParentId(null)} // Keeps parentId null
+            onChange={() => setParentId(null)} 
           >
             <option value={null}>None</option>
           </select>

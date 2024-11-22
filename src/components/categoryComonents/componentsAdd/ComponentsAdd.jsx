@@ -5,12 +5,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 const ComponentsAdd = () => {
-  const [parentId, setParentId] = useState('');  // Use empty string initially
+  const [parentId, setParentId] = useState('');  
   const [categoryTitle, setCategoryTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [message, setMessage] = useState('');
-  const [language, setLanguage] = useState('az'); // Language selection
+  const [language, setLanguage] = useState('az'); 
   const navigate=useNavigate()
 
   const handleFileChange = (event) => {
@@ -39,11 +39,11 @@ const ComponentsAdd = () => {
       const base64String = reader.result;
 
       const payload = {
-        parentId: parentId === '' ? null : parseInt(parentId), // Send null if parentId is empty
+        parentId: parentId === '' ? null : parseInt(parentId), 
         categoryImage: base64String,
         categoryTranslates: [
           {
-            languageId: 1, // Always sending language ID as 1
+            languageId: 1, 
             categoryTitle: categoryTitle,
           },
         ],

@@ -15,25 +15,18 @@ const Mask = () => {
     const fetchParameters = async () => {
       setLoading(true);
       try {
-        // Parametreleri al
         const response = await axios.get('http://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters');
         const data = response.data.data;
 
-        // Select parametreleri filtrele
         const selectParameters = data.filter(param => param.parameterTypeTitle === "select");
 
-        // Parametreler ve maskeleri almak için
         const parametersWithMasks = await Promise.all(
           selectParameters.map(async (param) => {
             try {
-              // Maskeleri al
               const maskResponse = await axios.get(`http://restartbaku-001-site4.htempurl.com/api/ParameterMask/get-all-parameter-masks-by-parameter/${param.parameterId}`);
               
-              // Konsolda API cevabını yazdır
               console.log(`API Response for parameter ${param.parameterId}:`, maskResponse.data);
-
               const masksData = maskResponse.data.data || [];
-              // Parametreye maskeleri ekle
               return { ...param, masks: masksData.map(mask => ({ id: mask.parameterMaskId, title: mask.parameterMaskTitle })) };
             } catch (error) {
               console.error(`Error fetching masks for parameter ${param.parameterId}:`, error);
@@ -42,7 +35,6 @@ const Mask = () => {
           })
         );
 
-        // Parametreleri state'e kaydet
         setParameters(parametersWithMasks);
       } catch (error) {
         console.error('Error fetching parameters:', error);
@@ -56,10 +48,8 @@ const Mask = () => {
 
   const handleDeleteMask = async (parameterId, maskId) => {
     try {
-      // Maskeyi sil
       const deleteResponse = await axios.delete(`http://restartbaku-001-site4.htempurl.com/api/ParameterMask/delete-parameter-mask/${maskId}`);
       
-      // Silme işleminden sonra parametreyi güncelle
       setParameters(prevParameters =>
         prevParameters.map(param => {
           if (param.parameterId === parameterId) {
