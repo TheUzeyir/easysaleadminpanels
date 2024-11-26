@@ -28,7 +28,7 @@ class ErrorBoundary extends React.Component {
 const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
   const [categoryTitle, setCategoryTitle] = useState('');
   const [categoryId, setCategoryId] = useState(''); 
-  const [categoryTranslateId, setCategoryTranslateId] = useState(0); // Yeni state əlavə edin
+  const [categoryTranslateId, setCategoryTranslateId] = useState(0); 
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -46,12 +46,11 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
         const data = response.data.data;
         console.log(data);
         
-        // `categoryTranslateId`-ni burada saxlayın
         const translateData = data.categoryTranslates && data.categoryTranslates.length > 0 ? data.categoryTranslates[0] : null;
 
         if (translateData) {
           setCategoryTitle(translateData.categoryTitle);
-          setCategoryTranslateId(translateData.categoryTranslateId); // `categoryTranslateId`-ni burada təyin edin
+          setCategoryTranslateId(translateData.categoryTranslateId); 
         }
         
         setCategoryId(data.categoryId || ''); 
@@ -77,7 +76,7 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
       parentId: null,
       categoryTranslates: [
         {
-          categoryTranslateId: categoryTranslateId, // `categoryTranslateId`-ni buradan istifadə edin
+          categoryTranslateId: categoryTranslateId,
           languageId: 1,
           categoryTitle: categoryTitle.trim(),
         },

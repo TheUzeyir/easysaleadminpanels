@@ -12,14 +12,14 @@ const CategoryPage = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isParametrModal, setIsParametrModal] = useState(false);
   const [parameters, setParameters] = useState([]);
-  const [selectedParameterId, setSelectedParameterId] = useState(null); // Yeni state
+  const [selectedParameterId, setSelectedParameterId] = useState(null);
   const navigate = useNavigate();
 
   const handleClickModal = () => {
     setIsModalOpen((prev) => !prev);
   };
   const handleClickParametrModal = (parameterId) => {
-    setSelectedParameterId(parameterId); // parameterId-ni yadda saxla
+    setSelectedParameterId(parameterId); 
     setIsParametrModal(true);
   };
 
@@ -28,7 +28,7 @@ const CategoryPage = ({ id }) => {
   };
   const CloseParametrModal = () => {
     setIsParametrModal(false);
-    setSelectedParameterId(null); // modal bağlandıqda parameterId-ni sıfırla
+    setSelectedParameterId(null); 
   };
 
   const handleDelete = async (parameterId) => {
