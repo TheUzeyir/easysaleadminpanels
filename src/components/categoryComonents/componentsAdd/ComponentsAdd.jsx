@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from "./componentsAdd.module.css";
 import Header from '../../../layout/header/Header';
 import axios from 'axios';
@@ -11,8 +11,12 @@ const ComponentsAdd = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [message, setMessage] = useState('');
   const [language, setLanguage] = useState('az'); // Language selection
-  const navigate=useNavigate()
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [categories, setCategories] = useState([]); // State to store categories
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const navigate = useNavigate();
 
+  // Handle file selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -25,9 +29,14 @@ const ComponentsAdd = () => {
     }
   };
 
+  // Handle category selection
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  // Handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
 
     if (!categoryTitle || !selectedFile) {
       setMessage('Please fill all fields and upload a valid image file.');
@@ -66,6 +75,7 @@ const ComponentsAdd = () => {
           setCategoryTitle('');
           setSelectedFile(null);
           setPreviewUrl(null);
+          navigate(-1); // Redirect after success
         } else {
           setMessage('Failed to create category. Please try again.');
         }
@@ -78,6 +88,25 @@ const ComponentsAdd = () => {
     reader.readAsDataURL(selectedFile);
   };
 
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoadingCategories(true);
+      try {
+        const response = await fetch('http://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=1');
+        const data = await response.json();
+        // Filter categories to only include those with parentId null (only parent categories)
+        setCategories(data.data.filter(category => category.parentId === null) || []); // Filtered categories
+      } catch (error) {
+        console.error("Hata oluştu:", error);
+      } finally {
+        setLoadingCategories(false); // Set loading to false after fetch
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <div className="componentsAdd_container">
       <Header />
@@ -88,11 +117,21 @@ const ComponentsAdd = () => {
             <div className={style.componentAdd_header}>
               <p>Parent Id *</p>
               <select
-                value={parentId}
-                onChange={(e) => setParentId(e.target.value)}
+                value={selectedCategory}
+                onChange={handleCategoryChange}
                 className={style.componentAdd_header_input}
+                disabled={loadingCategories}
               >
-                <option value="">null</option>
+                <option value="">Null</option>
+                {loadingCategories ? (
+                  <option disabled>Yüklənir...</option>
+                ) : (
+                  categories.map((category) => (
+                    <option key={category.categoryId} value={category.categoryId}>
+                      {category.categoryTitle}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
             <div className={style.componentAdd_header}>
@@ -131,7 +170,7 @@ const ComponentsAdd = () => {
               </div>
             </div>
             <div className={style.componentAdd_bottom}>
-              <button type="submit" className={style.componentAdd_bottom_btn} onClick={()=>navigate(-1)}>
+              <button type="submit" className={style.componentAdd_bottom_btn}>
                 Create Category
               </button>
             </div>
