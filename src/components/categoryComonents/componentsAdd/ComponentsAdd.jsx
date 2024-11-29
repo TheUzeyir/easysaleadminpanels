@@ -5,18 +5,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 const ComponentsAdd = () => {
-  const [parentId, setParentId] = useState('');  // Use empty string initially
+  const [parentId, setParentId] = useState('');
   const [categoryTitle, setCategoryTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [message, setMessage] = useState('');
-  const [language, setLanguage] = useState('az'); // Language selection
+  const [language, setLanguage] = useState('az');
   const [loadingCategories, setLoadingCategories] = useState(true);
-  const [categories, setCategories] = useState([]); // State to store categories
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const navigate = useNavigate();
 
-  // Handle file selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -29,12 +28,10 @@ const ComponentsAdd = () => {
     }
   };
 
-  // Handle category selection
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
 
-  // Handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
