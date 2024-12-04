@@ -28,7 +28,7 @@ function App() {
         <Route path="/users" element={<UsersPage/>}/> 
         <Route path="/parametrType" element={<ParametrType/>}/>
         <Route path="/mask" element={<Mask/>}/>
-        <Route path="/productDetail" element={<ProductDetail/>}/>
+        <Route path="/product-detail/:id" element={<ProductDetail />} />
         <Route path="/productCompoonent" element={<ProductCompoonent/>}/>
       </Routes>
     </BrowserRouter>

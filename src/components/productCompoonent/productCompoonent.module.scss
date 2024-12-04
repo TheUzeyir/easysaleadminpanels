@@ -85,7 +85,7 @@
 }
 
 .componentsPage_bottom_main_btn{
-    padding: 10px 60px;
+    padding: 10px 74px;
     background: red;
     color: white;
     border: none;
@@ -95,6 +95,18 @@
     position: absolute;
     right: 42%;
 }   
+.detailPage_main_head_right_btn_ok{
+    padding: 10px 60px;
+    background: green;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    right: 42%;
+}
+
 
 .componentsPage_bottom_main_iconBox{
     display: flex;
@@ -146,7 +158,8 @@
     }
 }
 @media screen and (min-width:2000px) {
-    .componentsPage_bottom_main_btn{
+    .componentsPage_bottom_main_btn,
+    .componentsPage_bottom_main_btn_ok{
         right: 44%;
     }   
 }
