@@ -9,6 +9,8 @@ import ParametrAdd from "./components/parametrComponents/parametrsAdd/ParametrAd
 import UsersPage from "./components/userComponents/usersPage/UsersPage"
 import ParametrType from "./components/parametrTypeComponents/parametrtype/ParametrType"
 import Mask from "./components/maskComponents/mask/Mask"
+import ProductDetail from "./page/productDetail/ProductDetail"
+import ProductCompoonent from "./components/productCompoonent/ProductCompoonent"
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/users" element={<UsersPage/>}/> 
         <Route path="/parametrType" element={<ParametrType/>}/>
         <Route path="/mask" element={<Mask/>}/>
+        <Route path="/productDetail" element={<ProductDetail/>}/>
+        <Route path="/productCompoonent" element={<ProductCompoonent/>}/>
       </Routes>
     </BrowserRouter>
     </>

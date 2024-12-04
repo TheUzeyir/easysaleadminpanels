@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 const ComponentsAdd = () => {
-  const [parentId, setParentId] = useState('');
+  const [parentId, setParentId] = useState(''); // Selected parent category ID
   const [categoryTitle, setCategoryTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -13,7 +13,6 @@ const ComponentsAdd = () => {
   const [language, setLanguage] = useState('az');
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
   const navigate = useNavigate();
 
   const handleFileChange = (event) => {
@@ -29,7 +28,7 @@ const ComponentsAdd = () => {
   };
 
   const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
+    setParentId(event.target.value); // Update parentId based on selected category
   };
 
   const handleFormSubmit = async (e) => {
@@ -45,11 +44,11 @@ const ComponentsAdd = () => {
       const base64String = reader.result;
 
       const payload = {
-        parentId: parentId === '' ? null : parseInt(parentId), // Send null if parentId is empty
+        parentId: parentId === '' ? null : parseInt(parentId), // If no parent selected, send null
         categoryImage: base64String,
         categoryTranslates: [
           {
-            languageId: 1, // Always sending language ID as 1
+            languageId: language === 'az' ? 1 : language === 'ru' ? 2 : 3,
             categoryTitle: categoryTitle,
           },
         ],
@@ -92,12 +91,11 @@ const ComponentsAdd = () => {
       try {
         const response = await fetch('http://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=1');
         const data = await response.json();
-        // Filter categories to only include those with parentId null (only parent categories)
-        setCategories(data.data.filter(category => category.parentId === null) || []); // Filtered categories
+        setCategories(data.data || []); // All categories
       } catch (error) {
         console.error("Hata oluştu:", error);
       } finally {
-        setLoadingCategories(false); // Set loading to false after fetch
+        setLoadingCategories(false);
       }
     };
 
@@ -114,7 +112,7 @@ const ComponentsAdd = () => {
             <div className={style.componentAdd_header}>
               <p>Parent Id *</p>
               <select
-                value={selectedCategory}
+                value={parentId}
                 onChange={handleCategoryChange}
                 className={style.componentAdd_header_input}
                 disabled={loadingCategories}
