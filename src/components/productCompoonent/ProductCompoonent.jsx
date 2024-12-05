@@ -11,14 +11,14 @@ const ProductComponent = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  const clickTrashBox = (id) => {
-    setData((prevData) => prevData.filter((item) => item.id !== id));
+  const clickTrashBox = (productId) => {
+    setData((prevData) => prevData.filter((item) => item.productId !== productId));
   };
 
   useEffect(() => {
     axios
       .get(
-        "http://restartbaku-001-site4.htempurl.com/api/Product/search?pageSize=30"
+        "http://restartbaku-001-site4.htempurl.com/api/Product/search?pageSize=10"
       )
       .then((response) => {
         if (response.data.isSuccessful && response.data.data.items) {
@@ -30,9 +30,10 @@ const ProductComponent = () => {
       .catch((error) => console.error("API hatası:", error));
   }, []);
 
-  const handleProductClick = (itemId) => {
-    navigate(`/product-detail/${itemId}`);
-};
+  const handleProductClick = (productId) => {
+    navigate(`/product-detail/${productId}`);
+
+  };
 
   return (
     <div className={style.componentsPage_container}>
@@ -58,7 +59,7 @@ const ProductComponent = () => {
               <div
                 key={item.productId}
                 className={style.componentsPage_bottom_main}
-                onClick={() => handleProductClick(item.id)}
+                onClick={() => handleProductClick(item.productId)}
               >
                 <p className={style.componentsPage_bottom_main_productParentId}>
                   {item.productTitle}
@@ -78,7 +79,7 @@ const ProductComponent = () => {
                     className={style.componentsPage_bottom_main_iconBox_icon}
                     onClick={(e) => {
                       e.stopPropagation();
-                      clickTrashBox(item.id);
+                      clickTrashBox(item.productId);
                     }}
                   />
                 </div>

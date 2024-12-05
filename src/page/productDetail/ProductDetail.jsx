@@ -12,19 +12,22 @@ const ProductDetail = () => {
     const [openComplaintBox, setOpenComplaintBox] = useState(false);
     const [product, setProduct] = useState({});
     const [mainImage, setMainImage] = useState(null);
-    const { id } = useParams();  // Get the 'id' from the URL params
+    const { id } = useParams();  
     const navigate = useNavigate();
+    
 
     useEffect(() => {
         if (id) {
             const getProduct = async () => {
                 try {
                     const response = await axios.get(
-                        `http://restartbaku-001-site4.htempurl.com/api/Product/get-product/${id}`
+                        `https://restartbaku-001-site4.htempurl.com/api/Product/get-product-by-id?Id=${id}`
                     );
                     if (response.data.isSuccessful) {
                         setProduct(response.data.data);
                         setMainImage(response.data.data.thumbnail);
+                        console.log(response.data.productTitle);
+                        
                     } else {
                         console.error("Ürün bulunamadı:", response.data.message);
                     }
@@ -36,7 +39,7 @@ const ProductDetail = () => {
         } else {
             console.error("Product ID is missing or invalid.");
         }
-    }, [id]); // Re-run the effect if 'id' changes
+    }, [id]); 
 
     const handleImageClick = (newImage) => {
         setMainImage(newImage);
