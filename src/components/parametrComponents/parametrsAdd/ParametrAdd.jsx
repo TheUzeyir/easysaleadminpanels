@@ -6,9 +6,9 @@ const ParametrAdd = ({ id }) => {
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
   const [formData, setFormData] = useState({
-    categoryId: 0,
-    parameterTypeId: 0,
-    isCategory: "Have", 
+    categoryId: null,
+    parameterTypeId: null, // Seçilməmiş vəziyyət üçün null
+    isCategory: "Have",
     parentParameterId: null,
     parameterLogo: '',
     languageId: 1,
@@ -50,7 +50,12 @@ const ParametrAdd = ({ id }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (!formData.parameterTypeId) {
+      alert("Zəhmət olmasa Parametr Tipini seçin.");
+      return;
+    }
+
     const payload = {
       categoryId: parseInt(formData.categoryId),
       parameterTypeId: parseInt(formData.parameterTypeId),
@@ -96,7 +101,14 @@ const ParametrAdd = ({ id }) => {
           <form className={style.componentAdd_form} onSubmit={handleSubmit}>
             <div className={style.componentAdd_header}>
               <label htmlFor="categorySelect">CategoryId *</label>
-              <select name="categoryId" id="categorySelect" className={style.componentAdd_header_input} onChange={handleChange}>
+              <select
+                name="categoryId"
+                id="categorySelect"
+                className={style.componentAdd_header_input}
+                onChange={handleChange}
+                value={formData.categoryId || ""}
+              >
+                <option value="" disabled>--Kateqoriya seçin--</option>
                 {data.length > 0 ? (
                   data.map((category) => (
                     <option key={category.categoryId} value={category.categoryId}>
@@ -110,7 +122,14 @@ const ParametrAdd = ({ id }) => {
             </div>
             <div className={style.componentAdd_header}>
               <label htmlFor="parameterTypeId">ParametrTypeId *</label>
-              <select name="parameterTypeId" id="parameterTypeId" className={style.componentAdd_header_input} onChange={handleChange}>
+              <select
+                name="parameterTypeId"
+                id="parameterTypeId"
+                className={style.componentAdd_header_input}
+                onChange={handleChange}
+                value={formData.parameterTypeId || ""}
+              >
+                <option value="" disabled>--Parametr Tipini Seçin--</option>
                 {data1.length > 0 ? (
                   data1.map((parameterType) => (
                     <option key={parameterType.parameterTypeId} value={parameterType.parameterTypeId}>
@@ -124,7 +143,13 @@ const ParametrAdd = ({ id }) => {
             </div>
             <div className={style.componentAdd_header}>
               <label htmlFor="isCategory">Is category *</label>
-              <select name="isCategory" id="isCategory" className={style.componentAdd_header_input} onChange={handleChange}>
+              <select
+                name="isCategory"
+                id="isCategory"
+                className={style.componentAdd_header_input}
+                onChange={handleChange}
+                value={formData.isCategory}
+              >
                 <option value="Have">Have</option>
                 <option value="Don't Have">Don't Have</option>
               </select>
@@ -138,6 +163,7 @@ const ParametrAdd = ({ id }) => {
                 placeholder="Parent Parameter Id"
                 className={style.componentAdd_header_input}
                 onChange={handleChange}
+                value={formData.parentParameterId || ""}
               />
             </div>
             <div className={style.componentAdd_header}>
@@ -150,14 +176,21 @@ const ParametrAdd = ({ id }) => {
                 className={style.componentAdd_header_input}
                 required
                 onChange={handleChange}
+                value={formData.parameterLogo}
               />
             </div>
             <div className={style.componentAdd_header}>
               <label htmlFor="languageId">LanguageId *</label>
-              <select name="languageId" id="languageId" className={style.componentAdd_header_input} onChange={handleChange}>
+              <select
+                name="languageId"
+                id="languageId"
+                className={style.componentAdd_header_input}
+                onChange={handleChange}
+                value={formData.languageId}
+              >
                 <option value={1}>English</option>
-                <option value={1}>Azerbaijan</option>
-                <option value={1}>Russian</option>
+                <option value={2}>Azerbaijan</option>
+                <option value={3}>Russian</option>
               </select>
             </div>
             <div className={style.componentAdd_header}>
@@ -170,6 +203,7 @@ const ParametrAdd = ({ id }) => {
                 className={style.componentAdd_header_input}
                 required
                 onChange={handleChange}
+                value={formData.parameterTitle}
               />
             </div>
             <div className={style.componentAdd_bottom}>

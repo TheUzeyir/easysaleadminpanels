@@ -55,7 +55,7 @@ const Mask = () => {
           if (param.parameterId === parameterId) {
             return {
               ...param,
-              masks: param.masks.filter(mask => mask.id !== maskId) // Silinen maskeyi array'den çıkar
+              masks: param.masks.filter(mask => mask.id !== maskId) 
             };
           }
           return param;
@@ -95,7 +95,7 @@ const Mask = () => {
                                       <FaTrash
                                         className="componentsPage_bottom_main_iconBox_icon"
                                         title="Delete"
-                                        onClick={() => handleDeleteMask(param.parameterId, mask.id)} // Silme işlemi
+                                        onClick={() => handleDeleteMask(param.parameterId, mask.id)} 
                                       />
                                     </div>
                                   </div>
