@@ -16,7 +16,6 @@ const ProductDetail = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check if 'id' is available before making the API request
         if (id) {
             const getProduct = async () => {
                 try {

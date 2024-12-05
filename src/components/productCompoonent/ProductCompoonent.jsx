@@ -17,7 +17,9 @@ const ProductComponent = () => {
 
   useEffect(() => {
     axios
-      .get("http://restartbaku-001-site4.htempurl.com/api/Product/search?pageSize=30")
+      .get(
+        "http://restartbaku-001-site4.htempurl.com/api/Product/search?pageSize=30"
+      )
       .then((response) => {
         if (response.data.isSuccessful && response.data.data.items) {
           setData(response.data.data.items);
@@ -29,9 +31,8 @@ const ProductComponent = () => {
   }, []);
 
   const handleProductClick = (itemId) => {
-    console.log("Clicked product ID:", itemId); // Log the clicked product ID
     navigate(`/product-detail/${itemId}`);
-  };
+};
 
   return (
     <div className={style.componentsPage_container}>
@@ -40,7 +41,11 @@ const ProductComponent = () => {
         <p className={style.componentsPage_title}>Add Attribute</p>
         <div className={style.componentsPage}>
           <div className={style.componentsPage_header}>
-            <input className={style.componentsPage_header_input} type="text" />
+            <input
+              className={style.componentsPage_header_input}
+              type="text"
+              placeholder="Search products..."
+            />
             <FaSearch className={style.componentsPage_header_input_icon} />
           </div>
           <div className={style.componentsPage_bottom}>
@@ -51,7 +56,7 @@ const ProductComponent = () => {
             </div>
             {data.map((item) => (
               <div
-                key={item.productId} // Unique key here
+                key={item.productId}
                 className={style.componentsPage_bottom_main}
                 onClick={() => handleProductClick(item.id)}
               >
@@ -72,7 +77,7 @@ const ProductComponent = () => {
                   <FaTrash
                     className={style.componentsPage_bottom_main_iconBox_icon}
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevents navigating to the detail page
+                      e.stopPropagation();
                       clickTrashBox(item.id);
                     }}
                   />
