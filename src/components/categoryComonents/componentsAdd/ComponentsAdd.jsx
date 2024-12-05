@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from "./componentsAdd.module.css";
 import Header from '../../../layout/header/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 const ComponentsAdd = () => {
-  const [parentId, setParentId] = useState('');  
+  const [parentId, setParentId] = useState(''); // Selected parent category ID
   const [categoryTitle, setCategoryTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [message, setMessage] = useState('');
-  const [language, setLanguage] = useState('az'); 
-  const navigate=useNavigate()
+  const [language, setLanguage] = useState('az');
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -25,9 +27,12 @@ const ComponentsAdd = () => {
     }
   };
 
+  const handleCategoryChange = (event) => {
+    setParentId(event.target.value); // Update parentId based on selected category
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
 
     if (!categoryTitle || !selectedFile) {
       setMessage('Please fill all fields and upload a valid image file.');
@@ -39,11 +44,11 @@ const ComponentsAdd = () => {
       const base64String = reader.result;
 
       const payload = {
-        parentId: parentId === '' ? null : parseInt(parentId), 
+        parentId: parentId === '' ? null : parseInt(parentId), // If no parent selected, send null
         categoryImage: base64String,
         categoryTranslates: [
           {
-            languageId: 1, 
+            languageId: language === 'az' ? 1 : language === 'ru' ? 2 : 3,
             categoryTitle: categoryTitle,
           },
         ],
@@ -66,6 +71,7 @@ const ComponentsAdd = () => {
           setCategoryTitle('');
           setSelectedFile(null);
           setPreviewUrl(null);
+          navigate(-1); // Redirect after success
         } else {
           setMessage('Failed to create category. Please try again.');
         }
@@ -78,6 +84,24 @@ const ComponentsAdd = () => {
     reader.readAsDataURL(selectedFile);
   };
 
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoadingCategories(true);
+      try {
+        const response = await fetch('http://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=1');
+        const data = await response.json();
+        setCategories(data.data || []); // All categories
+      } catch (error) {
+        console.error("Hata oluştu:", error);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <div className="componentsAdd_container">
       <Header />
@@ -89,10 +113,20 @@ const ComponentsAdd = () => {
               <p>Parent Id *</p>
               <select
                 value={parentId}
-                onChange={(e) => setParentId(e.target.value)}
+                onChange={handleCategoryChange}
                 className={style.componentAdd_header_input}
+                disabled={loadingCategories}
               >
-                <option value="">null</option>
+                <option value="">Null</option>
+                {loadingCategories ? (
+                  <option disabled>Yüklənir...</option>
+                ) : (
+                  categories.map((category) => (
+                    <option key={category.categoryId} value={category.categoryId}>
+                      {category.categoryTitle}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
             <div className={style.componentAdd_header}>
@@ -131,7 +165,7 @@ const ComponentsAdd = () => {
               </div>
             </div>
             <div className={style.componentAdd_bottom}>
-              <button type="submit" className={style.componentAdd_bottom_btn} onClick={()=>navigate(-1)}>
+              <button type="submit" className={style.componentAdd_bottom_btn}>
                 Create Category
               </button>
             </div>

@@ -73,7 +73,7 @@
 
 .componentsPage_bottom_main_productTitle,
 .componentsPage_bottom_main_productParentId {
-  width: 21%;
+  width: 44%;
 }
 
 .componentsPage_bottom_main_productImageBox {
@@ -86,14 +86,35 @@
   border-radius: 50%;
 }
 
-.componentsPage_bottom_header_title {
-  width: 20%;
+.componentsPage_bottom_main_btn {
+  padding: 10px 74px;
+  background: red;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  right: 42%;
+}
+
+.detailPage_main_head_right_btn_ok {
+  padding: 10px 60px;
+  background: green;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  right: 42%;
 }
 
 .componentsPage_bottom_main_iconBox {
   display: flex;
   gap: 15px;
-  margin-left: 20px;
+  position: absolute;
+  right: 3%;
 }
 
 .componentsPage_bottom_main_iconBox_icon {
@@ -133,10 +154,10 @@
     width: 768px;
     font-size: 14px;
   }
-  .componentsUpdate {
-    grid-template-columns: repeat(2, 1fr);
+}
+@media screen and (min-width: 2000px) {
+  .componentsPage_bottom_main_btn,
+  .componentsPage_bottom_main_btn_ok {
+    right: 44%;
   }
-  .ComponentsUpdate_btn {
-    margin-left: 50%;
-  }
-}/*# sourceMappingURL=mask.module.css.map */
+}/*# sourceMappingURL=productCompoonent.module.css.map */
