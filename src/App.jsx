@@ -18,11 +18,11 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main/>}/>
+        <Route path="/main" element={<Main/>}/>
         <Route path="/category" element={<ComponentsPage/>}/>
         <Route path="/componentsAdd" element={<ComponentsAdd/>}/>
         <Route path="/userInfo" element={<UserInfo/>}/>
-        <Route path="/login" element={<Login/>}/>
+        <Route path="/" element={<Login/>}/>
         <Route path="/parametrs" element={<Parametrs/>}/>
         <Route path="/parametrAdd" element={<ParametrAdd/>}/>
         <Route path="/users" element={<UsersPage/>}/> 
