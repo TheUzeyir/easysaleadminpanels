@@ -81,24 +81,19 @@ const ParametrType = () => {
     <div className={style.componentsPage_container}>
       <Header />
       <div className="container">
-        <p className={style.componentsPage_title}>Add Attribute</p>
+        <p className={style.componentsPage_title}>Parameter tipleri</p>
         <div className={style.componentsPage}>
           <div className={style.componentsPage_header}>
-            <input className={style.componentsPage_header_input} type="text" placeholder="Search..." />
-            <FaSearch className={style.componentsPage_header_input_icon} />
-            <button className={style.componentsPage_header_btn} onClick={() => navigate('/componentsAdd')}>
-              <FaPlus /> Add New
-            </button>
           </div>
           <div className={style.componentsPage_bottom}>
             <div className={style.componentsPage_bottom_header}>
-              <p className={style.componentsPage_bottom_header_title}>parameterTypeId</p>
-              <p className={style.componentsPage_bottom_header_title}>parameterTypeTitle</p>
-              <p className={style.componentsPage_bottom_header_title}>parameterTypeStatus</p>
-              <p className={style.componentsPage_bottom_header_title}>parameterTypeWeight</p>
+              <p className={style.componentsPage_bottom_header_title}>Parametrin ünikal İd-si</p>
+              <p className={style.componentsPage_bottom_header_title}>Parametrin tip başlığı</p>
+              <p className={style.componentsPage_bottom_header_title}>Parametrin Durumu</p>
+              <p className={style.componentsPage_bottom_header_title}>Parametrin həcmi</p>
             </div>
             {loading ? (
-              <h4>Loading categories...</h4>
+              <h4>Parameterin tipləri Yüklənir...</h4>
             ) : (
               dataList.map((item, index) => (
                 <div key={`${item.categoryId}-${index}`} className={style.componentsPage_bottom_main_container}>

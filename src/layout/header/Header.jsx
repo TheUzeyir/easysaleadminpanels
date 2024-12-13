@@ -30,7 +30,7 @@ const [isParametrBarOpen, setParametrBarOpen] = useState(false);
           <div className={style.adminPanel_header_adminBox}>
               <img className={style.adminPanel_header_adminBox_img} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsXDDUqQGrByxgFyFDAy8h4qoV-gyEPfnb2A&s" alt="" />
               <div className={style.adminPanel_header_adminBox_textCard}>                
-              <p className={style.adminPanel_header_adminBox_textCard_title}>Lorem, ipsum.</p>
+              <p className={style.adminPanel_header_adminBox_textCard_title}>Sistem idarə etmesi.</p>
               <p>Admin</p>
               </div>
           </div>
