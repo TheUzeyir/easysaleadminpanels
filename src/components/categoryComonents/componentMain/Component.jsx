@@ -84,22 +84,22 @@ const ComponentsPage = () => {
     <div className={style.componentsPage_container}>
       <Header />
       <div className="container">
-        <p className={style.componentsPage_title}>Add Attribute</p>
+        <p className={style.componentsPage_title}>Kategoriyalar</p>
         <div className={style.componentsPage}>
           <div className={style.componentsPage_header}>
             <input className={style.componentsPage_header_input} type="text" placeholder="Search..." />
             <FaSearch className={style.componentsPage_header_input_icon} />
             <button className={style.componentsPage_header_btn} onClick={() => navigate('/componentsAdd')}>
-              <FaPlus /> Add New
+              <FaPlus /> Yeni kategoriya əlave et
             </button>
           </div>
           <div className={style.componentsPage_bottom}>
             <div className={style.componentsPage_bottom_header}>
-              <p className={style.componentsPage_bottom_header_title}>ID</p>
-              <p className={style.componentsPage_bottom_header_title}>Title</p>
-              <p className={style.componentsPage_bottom_header_title}>Parent ID</p>
-              <p className={style.componentsPage_bottom_header_title}>Image</p>
-              <p className={style.componentsPage_bottom_header_title}>Action</p>
+              <p className={style.componentsPage_bottom_header_title}>Kategoriya İd-si</p>
+              <p className={style.componentsPage_bottom_header_title}>Kategoriya başlığı</p>
+              <p className={style.componentsPage_bottom_header_title}>Üst kategoriya adı</p>
+              <p className={style.componentsPage_bottom_header_title}>Şəkil</p>
+              <p className={style.componentsPage_bottom_header_title}>Dəyişiklık</p>
             </div>
             {loading ? (
               <h4>Loading categories...</h4>

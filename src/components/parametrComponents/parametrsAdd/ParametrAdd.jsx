@@ -97,10 +97,10 @@ const ParametrAdd = ({ id }) => {
       <Header />
       <div className="container">
         <div className={style.componentAdd}>
-          <p className={style.componentAdd_title}>Add Parameter</p>
+          <p className={style.componentAdd_title}>Parameter Əlavə edin</p>
           <form className={style.componentAdd_form} onSubmit={handleSubmit}>
             <div className={style.componentAdd_header}>
-              <label htmlFor="categorySelect">CategoryId *</label>
+              <label htmlFor="categorySelect">Kategoriyanı seçin *</label>
               <select
                 name="categoryId"
                 id="categorySelect"
@@ -116,12 +116,12 @@ const ParametrAdd = ({ id }) => {
                     </option>
                   ))
                 ) : (
-                  <option value="">No categories available</option>
+                  <option value="">Kategoriya yoxdur</option>
                 )}
               </select>
             </div>
             <div className={style.componentAdd_header}>
-              <label htmlFor="parameterTypeId">ParametrTypeId *</label>
+              <label htmlFor="parameterTypeId">Parameterin Tipin təyin edin *</label>
               <select
                 name="parameterTypeId"
                 id="parameterTypeId"
@@ -142,7 +142,7 @@ const ParametrAdd = ({ id }) => {
               </select>
             </div>
             <div className={style.componentAdd_header}>
-              <label htmlFor="isCategory">Is category *</label>
+              <label htmlFor="isCategory">Parameteriniz globaldırmı? *</label>
               <select
                 name="isCategory"
                 id="isCategory"
@@ -150,8 +150,8 @@ const ParametrAdd = ({ id }) => {
                 onChange={handleChange}
                 value={formData.isCategory}
               >
-                <option value="Have">Have</option>
-                <option value="Don't Have">Don't Have</option>
+                <option value="Beli">Beli</option>
+                <option value="Xeyir">Xeyir</option>
               </select>
             </div>
             <div className={style.componentAdd_header}>
@@ -160,19 +160,19 @@ const ParametrAdd = ({ id }) => {
                 id="parentParameterId"
                 name="parentParameterId"
                 type="text"
-                placeholder="Parent Parameter Id"
+                placeholder="Bunu həmişə null daxil edin"
                 className={style.componentAdd_header_input}
                 onChange={handleChange}
                 value={formData.parentParameterId || ""}
               />
             </div>
             <div className={style.componentAdd_header}>
-              <label htmlFor="parameterLogo">ParametrLogo *</label>
+              <label htmlFor="parameterLogo">Parameter üçün link daxil edin *</label>
               <input
                 id="parameterLogo"
                 name="parameterLogo"
                 type="text"
-                placeholder="Parameter Logo"
+                placeholder="Parameter ünvanı"
                 className={style.componentAdd_header_input}
                 required
                 onChange={handleChange}
@@ -180,7 +180,7 @@ const ParametrAdd = ({ id }) => {
               />
             </div>
             <div className={style.componentAdd_header}>
-              <label htmlFor="languageId">LanguageId *</label>
+              <label htmlFor="languageId">Dili seçin *</label>
               <select
                 name="languageId"
                 id="languageId"
@@ -194,12 +194,12 @@ const ParametrAdd = ({ id }) => {
               </select>
             </div>
             <div className={style.componentAdd_header}>
-              <label htmlFor="parameterTitle">ParametrTitle *</label>
+              <label htmlFor="parameterTitle">Parameter başlığı daxil edin *</label>
               <input
                 id="parameterTitle"
                 name="parameterTitle"
                 type="text"
-                placeholder="Parameter Title"
+                placeholder="Parameter başlığı "
                 className={style.componentAdd_header_input}
                 required
                 onChange={handleChange}
@@ -208,7 +208,7 @@ const ParametrAdd = ({ id }) => {
             </div>
             <div className={style.componentAdd_bottom}>
               <button type="submit" className={style.componentAdd_bottom_btn}>
-                Create Parameter
+                Parameter Əlavə et
               </button>
             </div>
           </form>

@@ -57,7 +57,7 @@ const CategoryPage = ({ id }) => {
   useEffect(() => {
     const fetchParameters = async () => {
       try {
-        const response = await fetch("http://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters");
+        const response = await fetch("https://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters");
         const data = await response.json();
         if (data.isSuccessful) {
           setParameters(data.data);
@@ -75,7 +75,7 @@ const CategoryPage = ({ id }) => {
     <div className={style.componentsPage_container}>
       <Header />
       <div className="container">
-        <p className={style.componentsPage_title}>Add Attribute</p>
+        <p className={style.componentsPage_title}>Parameterlər</p>
         <div className={style.componentsPage}>
           <div className={style.componentsPage_header}>
             <input
@@ -88,18 +88,18 @@ const CategoryPage = ({ id }) => {
               className={style.componentsPage_header_btn}
               onClick={() => navigate('/parametrAdd')}
             >
-              <FaPlus /> Add New
+              <FaPlus /> Yeni parameter əlave et
             </button>
           </div>
           <div className={style.componentsPage_bottom}>
             <div className={style.componentsPage_bottom_header}>
-              <p className={style.componentsPage_bottom_header_title}>Parameter ID</p>
-              <p className={style.componentsPage_bottom_header_title}>Parent Parameter ID</p>
-              <p className={style.componentsPage_bottom_header_title}>Parameter Title</p>
-              <p className={style.componentsPage_bottom_header_title}>Category Title</p>
-              <p className={style.componentsPage_bottom_header_title}>Parameter Type</p>
-              <p className={style.componentsPage_bottom_header_title}>Parameter Logo</p>
-              <p className={style.componentsPage_bottom_header_title}>Actions</p>
+              <p className={style.componentsPage_bottom_header_title}>Parameter ünikal İd-si</p>
+              <p className={style.componentsPage_bottom_header_title}>Üst Parameterin ünikal İd-si</p>
+              <p className={style.componentsPage_bottom_header_title}> Parameterin başlığı</p>
+              <p className={style.componentsPage_bottom_header_title}>Kategoriya başlığı</p>
+              <p className={style.componentsPage_bottom_header_title}>Parameterin Tipi</p>
+              <p className={style.componentsPage_bottom_header_title}>Parameterin Şəkili</p>
+              <p className={style.componentsPage_bottom_header_title}>Dəyişiklık</p>
             </div>
             <div className={style.componentsPage_bottom_main_container}>
               {parameters.map((param) => (

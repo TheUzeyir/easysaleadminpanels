@@ -76,7 +76,7 @@ const Mask = () => {
           <p>Loading...</p>
         ) : (
           <>
-            <h5 className="componentsPage_title" style={{ margin: "30px 5px" }}>ParametrMasks</h5>
+            <h5 className="componentsPage_title" style={{ margin: "30px 5px" }}>Parametr Maskları</h5>
             <div className="componentsPage">
               <div className="componentsPage_bottom">
                 <Accordion>
@@ -101,7 +101,7 @@ const Mask = () => {
                                   </div>
                                 ))
                               ) : (
-                                <p>No masks available for this parameter.</p>
+                                <p>Uyğun parametere maskımız yoxdur.</p>
                               )}
                             </div>
                           </Accordion.Body>
@@ -109,7 +109,7 @@ const Mask = () => {
                       </Card>
                     ))
                   ) : (
-                    <p>No parameters found.</p>
+                    <p>Parameter tapılmadlı.</p>
                   )}
                 </Accordion>
               </div>
