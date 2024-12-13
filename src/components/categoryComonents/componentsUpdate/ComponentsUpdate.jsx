@@ -27,33 +27,40 @@ class ErrorBoundary extends React.Component {
 
 const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
   const [categoryTitle, setCategoryTitle] = useState('');
-  const [categoryId, setCategoryId] = useState(''); 
-  const [categoryTranslateId, setCategoryTranslateId] = useState(0); 
+  const [categoryId, setCategoryId] = useState('');
+  const [categoryTranslateId, setCategoryTranslateId] = useState(0);
+  const [categoryTranslations, setCategoryTranslations] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [activeLanguage, setActiveLanguage] = useState('az'); // default language is Azerbaijani
+
+  const languages = ['az', 'ru', 'en']; // Azerbaijani, Russian, English
 
   useEffect(() => {
     const fetchCategoryData = async () => {
-      if (!item || !item.categoryId) return; 
+      if (!item || !item.categoryId) return;
 
       setLoading(true);
 
       try {
         const response = await axios.get(
-          `http://restartbaku-001-site4.htempurl.com/api/Category/get-category/${item.categoryId}`
+          `https://restartbaku-001-site4.htempurl.com/api/Category/get-category/${item.categoryId}`
         );
         const data = response.data.data;
         console.log(data);
-        
-        const translateData = data.categoryTranslates && data.categoryTranslates.length > 0 ? data.categoryTranslates[0] : null;
+
+        setCategoryId(data.categoryId || ''); 
+        setCategoryTranslations(data.categoryTranslates || []); 
+        const translateData = data.categoryTranslates && data.categoryTranslates.length > 0
+          ? data.categoryTranslates.find(trans => trans.languageId === getLanguageId(activeLanguage))
+          : null;
 
         if (translateData) {
           setCategoryTitle(translateData.categoryTitle);
-          setCategoryTranslateId(translateData.categoryTranslateId); 
+          setCategoryTranslateId(translateData.categoryTranslateId);
         }
         
-        setCategoryId(data.categoryId || ''); 
       } catch (error) {
         console.error("Error fetching category data:", error);
         setError('Failed to load category data.');
@@ -63,7 +70,16 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
     };
 
     fetchCategoryData();
-  }, [item]);
+  }, [item, activeLanguage]);
+
+  const getLanguageId = (lang) => {
+    switch (lang) {
+      case 'az': return 1; // Azerbaijani language ID
+      case 'ru': return 2; // Russian language ID
+      case 'en': return 3; // English language ID
+      default: return 1; // Default to Azerbaijani
+    }
+  };
 
   const handleUpdate = async () => {
     if (!categoryTitle.trim() || !categoryId) {
@@ -74,19 +90,17 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
     const updatedData = {
       categoryId: categoryId,
       parentId: null,
-      categoryTranslates: [
-        {
-          categoryTranslateId: categoryTranslateId,
-          languageId: 1,
-          categoryTitle: categoryTitle.trim(),
-        },
-      ],
+      categoryTranslates: categoryTranslations.map(trans => 
+        trans.languageId === getLanguageId(activeLanguage)
+          ? { ...trans, categoryTitle: categoryTitle.trim() }
+          : trans
+      ),
     };
 
     try {
       setIsSaving(true);
       const response = await axios.post(
-        `http://restartbaku-001-site4.htempurl.com/api/Category/update-category`,
+        `https://restartbaku-001-site4.htempurl.com/api/Category/update-category`,
         updatedData,
         {
           headers: {
@@ -122,21 +136,33 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
           <p onClick={onClose} className={style.componentsUpdate_title}>
             Update Component <IoClose className={style.componentsUpdate_title_icon} />
           </p>
-          
+
           {loading ? (
             <p>Loading category data...</p>
           ) : (
             <>
+              <div className={style.languageTabs}>
+                {languages.map((lang) => (
+                  <button
+                    key={lang}
+                    className={activeLanguage === lang ? style.activeTab : ''}
+                    onClick={() => setActiveLanguage(lang)}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+
               <input
                 name="categoryTitle"
                 value={categoryTitle}
                 onChange={(e) => setCategoryTitle(e.target.value)}
                 className={style.componentsUpdate_input}
-                placeholder="Update Category Title"
+                placeholder={`Update Category Title (${activeLanguage.toUpperCase()})`}
                 required
               />
-              <button 
-                className={style.componentsUpdate_btn} 
+              <button
+                className={style.componentsUpdate_btn}
                 onClick={handleUpdate}
                 disabled={isSaving}
               >

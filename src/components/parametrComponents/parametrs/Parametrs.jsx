@@ -57,7 +57,7 @@ const CategoryPage = ({ id }) => {
   useEffect(() => {
     const fetchParameters = async () => {
       try {
-        const response = await fetch("http://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters");
+        const response = await fetch("https://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters");
         const data = await response.json();
         if (data.isSuccessful) {
           setParameters(data.data);
