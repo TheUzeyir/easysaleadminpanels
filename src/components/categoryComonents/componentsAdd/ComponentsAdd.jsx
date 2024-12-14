@@ -39,7 +39,7 @@ const ComponentsAdd = () => {
 
     try {
       const response = await axios.post(
-        'http://restartbaku-001-site4.htempurl.com/api/Category/create-category',
+        'https://restartbaku-001-site4.htempurl.com/api/Category/create-category',
         payload,
         {
           headers: {
@@ -68,7 +68,7 @@ const ComponentsAdd = () => {
     const fetchCategories = async () => {
       setLoadingCategories(true);
       try {
-        const response = await fetch('http://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=1');
+        const response = await fetch('https://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=1');
         const data = await response.json();
         setCategories(data.data || []); // All categories
       } catch (error) {

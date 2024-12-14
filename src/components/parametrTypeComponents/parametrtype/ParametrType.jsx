@@ -20,7 +20,7 @@ const ParametrType = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://restartbaku-001-site4.htempurl.com/api/ParameterType/get-all-parameter-types');
+      const response = await axios.get('https://restartbaku-001-site4.htempurl.com/api/ParameterType/get-all-parameter-types');
       const { data } = response.data;
       if (Array.isArray(data)) {
         const filteredData = data.filter((item) => !deletedItems.includes(item.categoryId));
@@ -35,7 +35,7 @@ const ParametrType = () => {
 
   const clickTrashBox = async (categoryId) => {
     try {
-      const response = await axios.delete(`http://restartbaku-001-site4.htempurl.com/api/Category/delete-category/${categoryId}`);
+      const response = await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/Category/delete-category/${categoryId}`);
       if (response.data.isSuccessful) {
         setDataList((prevDataList) => prevDataList.filter((item) => item.categoryId !== categoryId));
         setDeletedItems((prevDeletedItems) => [...prevDeletedItems, categoryId]); 
