@@ -18,7 +18,7 @@ const ProductComponent = () => {
   useEffect(() => {
     axios
       .get(
-        "http://restartbaku-001-site4.htempurl.com/api/Product/search?pageSize=10"
+        "https://restartbaku-001-site4.htempurl.com/api/Product/search?pageSize=10"
       )
       .then((response) => {
         if (response.data.isSuccessful && response.data.data.items) {

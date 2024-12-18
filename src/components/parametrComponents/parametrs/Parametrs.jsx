@@ -36,7 +36,7 @@ const CategoryPage = ({ id }) => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://restartbaku-001-site4.htempurl.com/api/Parameter/delete-parameter/${parameterId}`, {
+      const response = await fetch(`https://restartbaku-001-site4.htempurl.com/api/Parameter/delete-parameter/${parameterId}`, {
         method: 'DELETE',
       });
 

@@ -15,7 +15,7 @@ const Mask = () => {
     const fetchParameters = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters');
+        const response = await axios.get('https://restartbaku-001-site4.htempurl.com/api/Parameter/get-all-parameters');
         const data = response.data.data;
 
         const selectParameters = data.filter(param => param.parameterTypeTitle === "select");
@@ -23,7 +23,7 @@ const Mask = () => {
         const parametersWithMasks = await Promise.all(
           selectParameters.map(async (param) => {
             try {
-              const maskResponse = await axios.get(`http://restartbaku-001-site4.htempurl.com/api/ParameterMask/get-all-parameter-masks-by-parameter/${param.parameterId}`);
+              const maskResponse = await axios.get(`https://restartbaku-001-site4.htempurl.com/api/ParameterMask/get-all-parameter-masks-by-parameter/${param.parameterId}`);
               
               console.log(`API Response for parameter ${param.parameterId}:`, maskResponse.data);
               const masksData = maskResponse.data.data || [];
@@ -48,7 +48,7 @@ const Mask = () => {
 
   const handleDeleteMask = async (parameterId, maskId) => {
     try {
-      const deleteResponse = await axios.delete(`http://restartbaku-001-site4.htempurl.com/api/ParameterMask/delete-parameter-mask/${maskId}`);
+      const deleteResponse = await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/ParameterMask/delete-parameter-mask/${maskId}`);
       
       setParameters(prevParameters =>
         prevParameters.map(param => {

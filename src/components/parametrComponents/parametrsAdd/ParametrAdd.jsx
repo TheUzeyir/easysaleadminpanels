@@ -6,29 +6,29 @@ const ParametrAdd = ({ id }) => {
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
   const [formData, setFormData] = useState({
-    categoryId: null,
-    parameterTypeId: null, // Seçilməmiş vəziyyət üçün null
-    isCategory: "Have",
-    parentParameterId: null,
-    parameterLogo: '',
+    categoryId: "",
+    parameterTypeId: "",
+    isCategory: "", 
+    parentParameterId: "",
+    parameterLogo: "",
     languageId: 1,
-    parameterTitle: ''
+    parameterTitle: ""
   });
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`http://restartbaku-001-site4.htempurl.com/api/Category/get-all-categories`);
+        const response = await fetch(`https://restartbaku-001-site4.htempurl.com/api/Category/get-all-categories`);
         const result = await response.json();
         setData(Array.isArray(result.data) ? result.data : []);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
-    
+
     const fetchParameterTypes = async () => {
       try {
-        const response = await fetch(`http://restartbaku-001-site4.htempurl.com/api/ParameterType/get-all-parameter-types`);
+        const response = await fetch(`https://restartbaku-001-site4.htempurl.com/api/ParameterType/get-all-parameter-types`);
         const result = await response.json();
         setData1(Array.isArray(result.data) ? result.data : []);
       } catch (error) {
@@ -51,29 +51,33 @@ const ParametrAdd = ({ id }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.categoryId) {
+      alert("Zəhmət olmasa Kateqoriyanı seçin.");
+      return;
+    }
     if (!formData.parameterTypeId) {
       alert("Zəhmət olmasa Parametr Tipini seçin.");
       return;
     }
 
     const payload = {
-      categoryId: parseInt(formData.categoryId),
-      parameterTypeId: parseInt(formData.parameterTypeId),
-      isCategory: formData.isCategory === "Have" ? 1 : 0,
-      parentParameterId: formData.parentParameterId ? parseInt(formData.parentParameterId) : null,
+      categoryId: parseInt(formData.categoryId, 10),
+      parameterTypeId: parseInt(formData.parameterTypeId, 10),
+      isCategory: formData.isCategory === "Beli" ? 1 : 0,
+      parentParameterId: formData.parentParameterId ? parseInt(formData.parentParameterId, 10) : null,
       parameterLogo: formData.parameterLogo,
       parameterTranslates: [
         {
-          languageId: formData.languageId,
+          languageId: 1,
           parameterTitle: formData.parameterTitle
         }
       ]
     };
-
+   
     console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
     try {
-      const response = await fetch(`http://restartbaku-001-site4.htempurl.com/api/Parameter/create-parameter`, {
+      const response = await fetch(`https://restartbaku-001-site4.htempurl.com/api/Parameter/create-parameter`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,8 +91,10 @@ const ParametrAdd = ({ id }) => {
 
       const result = await response.json();
       console.log("Parameter created successfully:", result);
+      alert("Parameter uğurla əlavə edildi.");
     } catch (error) {
       console.error("Failed to create parameter:", error);
+      alert("Parameter əlavə edilərkən xəta baş verdi.");
     }
   };
 
@@ -106,39 +112,35 @@ const ParametrAdd = ({ id }) => {
                 id="categorySelect"
                 className={style.componentAdd_header_input}
                 onChange={handleChange}
-                value={formData.categoryId || ""}
+                value={formData.categoryId}
               >
-                <option value="" disabled>--Kateqoriya seçin--</option>
-                {data.length > 0 ? (
-                  data.map((category) => (
-                    <option key={category.categoryId} value={category.categoryId}>
-                      {category.categoryTitle}
-                    </option>
-                  ))
-                ) : (
-                  <option value="">Kategoriya yoxdur</option>
-                )}
+                <option value="" disabled>
+                  --Kateqoriyanı seçin--
+                </option>
+                {data.map((category) => (
+                  <option key={category.categoryId} value={category.categoryId}>
+                    {category.categoryTitle}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={style.componentAdd_header}>
-              <label htmlFor="parameterTypeId">Parameterin Tipin təyin edin *</label>
+              <label htmlFor="parameterTypeId">Parameterin Tipini təyin edin *</label>
               <select
                 name="parameterTypeId"
                 id="parameterTypeId"
                 className={style.componentAdd_header_input}
                 onChange={handleChange}
-                value={formData.parameterTypeId || ""}
+                value={formData.parameterTypeId}
               >
-                <option value="" disabled>--Parametr Tipini Seçin--</option>
-                {data1.length > 0 ? (
-                  data1.map((parameterType) => (
-                    <option key={parameterType.parameterTypeId} value={parameterType.parameterTypeId}>
-                      {parameterType.parameterTypeTitle}
-                    </option>
-                  ))
-                ) : (
-                  <option value="">No parameter types available</option>
-                )}
+                <option value="" disabled>
+                  --Parametr Tipini Seçin--
+                </option>
+                {data1.map((parameterType) => (
+                  <option key={parameterType.parameterTypeId} value={parameterType.parameterTypeId}>
+                    {parameterType.parameterTypeTitle}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={style.componentAdd_header}>
@@ -150,7 +152,10 @@ const ParametrAdd = ({ id }) => {
                 onChange={handleChange}
                 value={formData.isCategory}
               >
-                <option value="Beli">Beli</option>
+                <option value="" disabled>
+                  --Global parametr seçin--
+                </option>
+                <option value="Beli">Bəli</option>
                 <option value="Xeyir">Xeyir</option>
               </select>
             </div>
@@ -163,7 +168,7 @@ const ParametrAdd = ({ id }) => {
                 placeholder="Bunu həmişə null daxil edin"
                 className={style.componentAdd_header_input}
                 onChange={handleChange}
-                value={formData.parentParameterId || ""}
+                value={formData.parentParameterId}
               />
             </div>
             <div className={style.componentAdd_header}>

@@ -23,7 +23,7 @@ const ComponentsPage = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=az&page=1&limit=10');
+      const response = await axios.get('https://restartbaku-001-site4.htempurl.com/api/Category/get-all-categories?LanguageCode=az&page=1&limit=10');
       const { data } = response.data;
       if (Array.isArray(data)) {
         const filteredData = data.filter((item) => !deletedItems.includes(item.categoryId));
@@ -38,10 +38,11 @@ const ComponentsPage = () => {
 
   const clickTrashBox = async (categoryId) => {
     try {
-      const response = await axios.delete(`http://restartbaku-001-site4.htempurl.com/api/Category/delete-category/${categoryId}`);
+      const response = await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/Category/delete-category/${categoryId}`);
       if (response.data.isSuccessful) {
         setDataList((prevDataList) => prevDataList.filter((item) => item.categoryId !== categoryId));
         setDeletedItems((prevDeletedItems) => [...prevDeletedItems, categoryId]); 
+        
         alert('Category deleted successfully!');
       } else {
         console.error('Failed to delete the category:', response.data);
@@ -109,7 +110,7 @@ const ComponentsPage = () => {
                   <div className={`${style.componentsPage_bottom_main} ${deleteBox ? style.componentsPage_bottom_main_displayNone : ""}`}>
                     <p className={style.componentsPage_bottom_main_productTitle}>{item.categoryId}</p>
                     <p className={style.componentsPage_bottom_main_productTitle}>{item.categoryTitle}</p>
-                    <p className={style.componentsPage_bottom_main_productParentId}>{item.parentId || 'N/A'}</p>
+                    <p className={style.componentsPage_bottom_main_productParentId}>{item.parentId || 'Yoxdur'}</p>
                     <div className={style.componentsPage_bottom_main_productImageBox}>
                       <img 
                         src={item.categoryImage}
@@ -125,6 +126,7 @@ const ComponentsPage = () => {
                         className={style.componentsPage_bottom_main_iconBox_icon} 
                         onClick={() => clickTrashBox(item.categoryId)} 
                       />
+                      
                     </div>
                   </div>
                 </div>
