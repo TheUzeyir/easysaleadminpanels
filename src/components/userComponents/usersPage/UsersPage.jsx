@@ -28,9 +28,7 @@ const UsersPage = () => {
           <div className={style.componentsPage_header}>
             <input className={style.componentsPage_header_input} type="text" placeholder="Search..." />
             <FaSearch className={style.componentsPage_header_input_icon} />
-            <button className={style.componentsPage_header_btn} onClick={() => navigate('/parametrAdd')}>
-              <FaPlus /> Add New
-            </button>
+           
           </div>
           <div className={style.componentsPage_bottom}>
             <div className={style.componentsPage_bottom_header}>

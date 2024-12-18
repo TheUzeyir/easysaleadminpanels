@@ -23,7 +23,7 @@ const ComponentsPage = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('https://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=az&page=1&limit=10');
+      const response = await axios.get('https://restartbaku-001-site4.htempurl.com/api/Category/get-all-categories?LanguageCode=az&page=1&limit=10');
       const { data } = response.data;
       if (Array.isArray(data)) {
         const filteredData = data.filter((item) => !deletedItems.includes(item.categoryId));
