@@ -53,7 +53,7 @@ const ComponentsAdd = () => {
         setParentId('');
         setCategoryTitle('');
         setImageBase64('');
-        navigate(-1); // Redirect after success
+        navigate(-1);
       } else {
         setMessage('Failed to create category. Please try again.');
       }
@@ -63,14 +63,13 @@ const ComponentsAdd = () => {
     }
   };
 
-  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       setLoadingCategories(true);
       try {
         const response = await fetch('https://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=1');
         const data = await response.json();
-        setCategories(data.data || []); // All categories
+        setCategories(data.data || []); 
       } catch (error) {
         console.error("Hata oluştu:", error);
       } finally {

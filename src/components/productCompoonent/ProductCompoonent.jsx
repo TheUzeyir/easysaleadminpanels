@@ -53,7 +53,7 @@ const ProductComponent = () => {
             <div className={style.componentsPage_bottom_header}>
               <p className={style.componentsPage_bottom_header_title}>Product</p>
               <p className={style.componentsPage_bottom_header_title}>Status</p>
-              <p className={style.componentsPage_bottom_header_title}>Action</p>
+              <p className={style.componentsPage_bottom_header_title}>Action</p> 
             </div>
             {data.map((item) => (
               <div

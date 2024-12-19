@@ -2,8 +2,6 @@ import React,{useState}from 'react'
 import style from "./header.module.css"
 import { AiOutlineBars } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
-import { FaMessage } from "react-icons/fa6";
-import { BiSolidCategory } from "react-icons/bi";
 import { FaBell } from "react-icons/fa";
 import ParametrBar from '../parametrBar/ParametrBar';
 
@@ -24,8 +22,6 @@ const [isParametrBarOpen, setParametrBarOpen] = useState(true );
               <CiSearch  className={style.adminPanel_header_inputBox_icon}/>
           </div>
           <div className={style.adminPanel_header_iconBox}>
-            <BiSolidCategory className={style.adminPanel_header_icon}/>
-             <p> <FaMessage className={style.adminPanel_header_icon}/><span className={style.adminPanel_header_icon_nubmer1}>1</span></p>
              <p> <FaBell className={style.adminPanel_header_icon}/><span className={style.adminPanel_header_icon_nubmer2}>1</span></p>
           </div>
           <div className={style.adminPanel_header_adminBox}>

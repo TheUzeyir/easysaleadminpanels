@@ -13,6 +13,7 @@ import ProductDetail from "./page/productDetail/ProductDetail"
 import ProductCompoonent from "./components/productCompoonent/ProductCompoonent"
 import CityComponent from "./components/city/cityComponents/City"
 import CityAdd from "./components/city/cityAdd/CityAdd"
+import ProductComponent from "./components/productCompoonent/ProductCompoonent"
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
         <Route path="/" element={<Login/>}/>
         <Route path="/parametrs" element={<Parametrs/>}/>
         <Route path="/parametrAdd" element={<ParametrAdd/>}/>
-        <Route path="/city" element={<CityComponent/>}/>
+        <Route path="/ProductCompoonent" element={<ProductComponent/>}/>
         <Route path="/city" element={<CityComponent/>}/>
         <Route path="/cityAdd" element={<CityAdd/>}/>
         <Route path="/users" element={<UsersPage/>}/> 

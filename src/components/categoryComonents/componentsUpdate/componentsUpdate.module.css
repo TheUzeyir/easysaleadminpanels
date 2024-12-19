@@ -55,37 +55,6 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 9;
 }
-.languageTabs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.languageTabs button {
-  padding: 10px 20px;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease;
-}
-
-.languageTabs button:hover {
-  background-color: #dcdcdc;
-  transform: scale(1.05);
-}
-
-.languageTabs button.activeTab {
-  background-color: #3a162f;
-  color: white;
-  font-weight: bold;
-  border: 1px solid #4CAF50;
-}
-
-.languageTabs button:focus {
-  outline: none;
-}
 
 @media screen and (max-width: 768px) {
   .componentsUpdate {

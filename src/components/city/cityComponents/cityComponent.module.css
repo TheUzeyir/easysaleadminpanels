@@ -36,15 +36,12 @@
   color: blue;
   border: 1px solid blue;
   background: transparent;
-  transition: 500ms;
-
 }
 
 .componentsPage_header_btn:hover {
   background: blue;
   color: white;
-  border: 1px solid blue;
-
+  border: none;
 }
 
 .componentsPage_bottom {
