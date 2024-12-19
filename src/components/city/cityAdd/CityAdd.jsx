@@ -63,12 +63,10 @@ const CityAdd = () => {
         toast.success('Şəhər uğurla əlavə edildi!');
         setTitle('');
         setOrderWeight('0');
-        
-        // Yeni şəhər əlavə edildikdən sonra siyahını yeniləyirik
         const updatedCitiesResponse = await axios.get('https://restartbaku-001-site4.htempurl.com/api/City/get-cities');
-        setCities(updatedCitiesResponse.data.data); // Yenilənmiş siyahını göstəririk
+        setCities(updatedCitiesResponse.data.data); 
 
-        setTimeout(() => navigate(-1), 2000); // 2 saniyədən sonra əvvəlki səhifəyə qayıdırıq
+        setTimeout(() => navigate(-1), 2000); 
       } else {
         toast.error('Şəhər əlavə etmək alınmadı. Yenidən cəhd edin.');
       }
