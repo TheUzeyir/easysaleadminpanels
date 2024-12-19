@@ -12,7 +12,7 @@ const Header = () => {
   const showParametrBar = () => {
     setParametrBarOpen((prev) => !prev);  
 };
-const [isParametrBarOpen, setParametrBarOpen] = useState(false); 
+const [isParametrBarOpen, setParametrBarOpen] = useState(true ); 
 
   return ( 
     <div className={style.adminPanel_header_container}>
