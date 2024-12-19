@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from "./parametrAdd.module.css";
 import Header from '../../../layout/header/Header';
 
@@ -9,11 +10,11 @@ const ParametrAdd = ({ id }) => {
     categoryId: "",
     parameterTypeId: "",
     isCategory: "", 
-    parentParameterId: "",
-    parameterLogo: "",
     languageId: 1,
     parameterTitle: ""
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -64,8 +65,8 @@ const ParametrAdd = ({ id }) => {
       categoryId: parseInt(formData.categoryId, 10),
       parameterTypeId: parseInt(formData.parameterTypeId, 10),
       isCategory: formData.isCategory === "Beli" ? 1 : 0,
-      parentParameterId: formData.parentParameterId ? parseInt(formData.parentParameterId, 10) : null,
-      parameterLogo: formData.parameterLogo,
+      parentParameterId: null, // Həmişə null olaraq göndərilir
+      parameterLogo: "string", // Sabit dəyər olaraq "string"
       parameterTranslates: [
         {
           languageId: 1,
@@ -73,7 +74,7 @@ const ParametrAdd = ({ id }) => {
         }
       ]
     };
-   
+
     console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
     try {
@@ -92,6 +93,7 @@ const ParametrAdd = ({ id }) => {
       const result = await response.json();
       console.log("Parameter created successfully:", result);
       alert("Parameter uğurla əlavə edildi.");
+      navigate(-1);
     } catch (error) {
       console.error("Failed to create parameter:", error);
       alert("Parameter əlavə edilərkən xəta baş verdi.");
@@ -158,31 +160,6 @@ const ParametrAdd = ({ id }) => {
                 <option value="Beli">Bəli</option>
                 <option value="Xeyir">Xeyir</option>
               </select>
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="parentParameterId">ParametrId *</label>
-              <input
-                id="parentParameterId"
-                name="parentParameterId"
-                type="text"
-                placeholder="Bunu həmişə null daxil edin"
-                className={style.componentAdd_header_input}
-                onChange={handleChange}
-                value={formData.parentParameterId}
-              />
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="parameterLogo">Parameter üçün link daxil edin *</label>
-              <input
-                id="parameterLogo"
-                name="parameterLogo"
-                type="text"
-                placeholder="Parameter ünvanı"
-                className={style.componentAdd_header_input}
-                required
-                onChange={handleChange}
-                value={formData.parameterLogo}
-              />
             </div>
             <div className={style.componentAdd_header}>
               <label htmlFor="languageId">Dili seçin *</label>

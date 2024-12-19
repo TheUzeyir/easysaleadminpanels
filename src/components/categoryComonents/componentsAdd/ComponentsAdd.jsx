@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import style from "./componentsAdd.module.css";
+import style from './componentsAdd.module.css';
 import Header from '../../../layout/header/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 const ComponentsAdd = () => {
   const [parentId, setParentId] = useState(''); // Selected parent category ID
   const [categoryTitle, setCategoryTitle] = useState('');
-  const [imageBase64, setImageBase64] = useState(''); 
+  const [imageBase64, setImageBase64] = useState('');
   const [message, setMessage] = useState('');
   const [language, setLanguage] = useState('az');
   const [loadingCategories, setLoadingCategories] = useState(true);
@@ -15,7 +15,7 @@ const ComponentsAdd = () => {
   const navigate = useNavigate();
 
   const handleCategoryChange = (event) => {
-    setParentId(event.target.value); 
+    setParentId(event.target.value);
   };
 
   const handleFormSubmit = async (e) => {
@@ -27,7 +27,7 @@ const ComponentsAdd = () => {
     }
 
     const payload = {
-      parentId: parentId === '' ? null : parseInt(parentId), 
+      parentId: parentId === '' ? null : parseInt(parentId),
       categoryImage: imageBase64,
       categoryTranslates: [
         {
@@ -48,12 +48,9 @@ const ComponentsAdd = () => {
         }
       );
 
-      if (response.status === 200) {
-        setMessage('Category created successfully!');
-        setParentId('');
-        setCategoryTitle('');
-        setImageBase64('');
-        navigate(-1);
+      if (response.status === 201) {
+        alert('Uğurlu şəkildə kategoriya əlavə edildi!');
+        navigate('/category');
       } else {
         setMessage('Failed to create category. Please try again.');
       }
@@ -69,9 +66,9 @@ const ComponentsAdd = () => {
       try {
         const response = await fetch('https://restartbaku-001-site3.htempurl.com/api/Category/get-all-categories?LanguageCode=1');
         const data = await response.json();
-        setCategories(data.data || []); 
+        setCategories(data.data || []);
       } catch (error) {
-        console.error("Hata oluştu:", error);
+        console.error('Hata oluştu:', error);
       } finally {
         setLoadingCategories(false);
       }

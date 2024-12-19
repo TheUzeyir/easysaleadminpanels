@@ -38,12 +38,15 @@ const ComponentsPage = () => {
   };
 
   const clickTrashBox = async (categoryId) => {
+    const userConfirmed = window.confirm("Silmek istediyinize eminsinizmi?");
+    if (!userConfirmed) return; // İstifadəçi təsdiqləmədikdə çıxır
+
     try {
       const response = await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/Category/delete-category/${categoryId}`);
       if (response.data.isSuccessful) {
         setDataList((prevDataList) => prevDataList.filter((item) => item.categoryId !== categoryId));
         setDeletedItems((prevDeletedItems) => [...prevDeletedItems, categoryId]); 
-        alert('Category deleted successfully!');
+        alert('Kategoriya silindi!');
       } else {
         console.error('Failed to delete the category:', response.data);
         alert('Failed to delete category.');
@@ -104,7 +107,7 @@ const ComponentsPage = () => {
               type="text"
               placeholder="Search..."
               value={searchTerm}
-              onChange={handleSearch} // Axtarışa qulaq asmaq
+              onChange={handleSearch} 
             />
             <FaSearch className={style.componentsPage_header_input_icon} />
             <button
@@ -123,7 +126,7 @@ const ComponentsPage = () => {
               <th className={style.componentsPage_bottom_header_title}>Dəyişiklık</th>
             </div>
             {loading ? (
-              <h4>Loading categories...</h4>
+              <h4>Kategoriyalar yuklenir...</h4>
             ) : (
               filteredDataList.map((item, index) => (
                 <div
