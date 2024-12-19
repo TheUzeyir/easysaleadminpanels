@@ -18,6 +18,7 @@ const [isParametrBarOpen, setParametrBarOpen] = useState(false);
     <div className={style.adminPanel_header_container}>
         <div className="container">
         <div className={style.adminPanel_header}>
+        <AiOutlineBars className={style.adminPanel_header_icon} onClick={showParametrBar}/>
           <div className={style.adminPanel_header_inputBox}>
               <input type="text" name="" id="" placeholder='Search here' className={style.adminPanel_header_inputBox_input}/>
               <CiSearch  className={style.adminPanel_header_inputBox_icon}/>
@@ -34,7 +35,6 @@ const [isParametrBarOpen, setParametrBarOpen] = useState(false);
               <p>Admin</p>
               </div>
           </div>
-          <AiOutlineBars className={style.adminPanel_header_icon} onClick={showParametrBar}/>
         </div>
         <input type="text" className={style.adminPanel_header_resInput} placeholder='Search'/>
       </div>

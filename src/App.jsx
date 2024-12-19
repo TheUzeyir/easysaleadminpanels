@@ -11,6 +11,8 @@ import ParametrType from "./components/parametrTypeComponents/parametrtype/Param
 import Mask from "./components/maskComponents/mask/Mask"
 import ProductDetail from "./page/productDetail/ProductDetail"
 import ProductCompoonent from "./components/productCompoonent/ProductCompoonent"
+import CityComponent from "./components/city/cityComponents/City"
+import CityAdd from "./components/city/cityAdd/CityAdd"
 
 function App() {
 
@@ -25,6 +27,9 @@ function App() {
         <Route path="/" element={<Login/>}/>
         <Route path="/parametrs" element={<Parametrs/>}/>
         <Route path="/parametrAdd" element={<ParametrAdd/>}/>
+        <Route path="/city" element={<CityComponent/>}/>
+        <Route path="/city" element={<CityComponent/>}/>
+        <Route path="/cityAdd" element={<CityAdd/>}/>
         <Route path="/users" element={<UsersPage/>}/> 
         <Route path="/parametrType" element={<ParametrType/>}/>
         <Route path="/mask" element={<Mask/>}/>
