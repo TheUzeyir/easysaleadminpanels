@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from "./cityAdd.module.css";
 import Header from '../../../layout/header/Header';
 import axios from 'axios';
@@ -9,13 +9,37 @@ import 'react-toastify/dist/ReactToastify.css';
 const CityAdd = () => {
   const [title, setTitle] = useState('');
   const [orderWeight, setOrderWeight] = useState('0');
+  const [cities, setCities] = useState([]); 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Şəhərləri API-dən alırıq
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get('https://restartbaku-001-site4.htempurl.com/api/City/get-cities');
+        setCities(response.data.data); // Alınan veriyi state-ə yığırıq
+      } catch (error) {
+        console.error('Şəhərlər alınarkən xəta baş verdi:', error);
+        toast.error('Şəhərlər alınarkən xəta baş verdi. Yenidən cəhd edin.');
+      }
+    };
+
+    fetchCities();
+  }, []); // Sayfa yükləndiyində şəhərləri al
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+    // Başlıq sahəsinin boş olub-olmamasını yoxlamaq
     if (!title) {
       toast.error('Zəhmət olmasa bütün sahələri doldurun.');
+      return;
+    }
+
+    // Şəhər adı artıq varsa, xəbərdarlıq veririk
+    const cityExists = cities.some(city => city.title.toLowerCase() === title.toLowerCase());
+    if (cityExists) {
+      toast.warn('Bu şəhər artıq əlavə edilib!');
       return;
     }
 
@@ -39,7 +63,12 @@ const CityAdd = () => {
         toast.success('Şəhər uğurla əlavə edildi!');
         setTitle('');
         setOrderWeight('0');
-        setTimeout(() => navigate(-1), 3000); // 3 saniyədən sonra geri dön
+        
+        // Yeni şəhər əlavə edildikdən sonra siyahını yeniləyirik
+        const updatedCitiesResponse = await axios.get('https://restartbaku-001-site4.htempurl.com/api/City/get-cities');
+        setCities(updatedCitiesResponse.data.data); // Yenilənmiş siyahını göstəririk
+
+        setTimeout(() => navigate(-1), 2000); // 2 saniyədən sonra əvvəlki səhifəyə qayıdırıq
       } else {
         toast.error('Şəhər əlavə etmək alınmadı. Yenidən cəhd edin.');
       }

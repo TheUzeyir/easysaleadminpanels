@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
-import { FaPenFancy, FaTrash } from 'react-icons/fa6';
+import {  FaTrash } from 'react-icons/fa6';
 import Header from '../../../layout/header/Header';
 import style from './cityComponent.module.css';
 import { FaMask } from 'react-icons/fa6';
@@ -18,10 +18,7 @@ const CityComponent = ({ id }) => {
   const [selectedParameterId, setSelectedParameterId] = useState(null);
   const navigate = useNavigate();
 
-  const handleClickParametrModal = (parameterId) => {
-    setSelectedParameterId(parameterId);
-    setIsParametrModal(true);
-  };
+
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -29,32 +26,6 @@ const CityComponent = ({ id }) => {
   const CloseParametrModal = () => {
     setIsParametrModal(false);
     setSelectedParameterId(null);
-  };
-
-  const handleDelete = async (parameterId) => {
-    const confirmDelete = window.confirm("Bu parametri silmek istediyinize eminsiniz?");
-    if (!confirmDelete) return;
-
-    try {
-      const response = await fetch(`https://restartbaku-001-site4.htempurl.com/api/Parameter/delete-parameter/${parameterId}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        setParameters((prevParameters) =>
-          prevParameters.filter((param) => param.parameterId !== parameterId)
-        );
-        setFilteredParameters((prevFiltered) =>
-          prevFiltered.filter((param) => param.parameterId !== parameterId)
-        );
-        alert("Parametr silindi.");
-      } else {
-        alert("Silmə zamanı xəta baş verdi.");
-      }
-    } catch (error) {
-      console.error("Error deleting parameter:", error);
-      alert("Xəta baş verdi, yenidən yoxlayın.");
-    }
   };
 
   useEffect(() => {
@@ -107,14 +78,14 @@ const CityComponent = ({ id }) => {
           </div>
           <div className={style.componentsPage_bottom}>
             <div className={style.componentsPage_bottom_header}>
-              <th className={style.componentsPage_bottom_header_title}>Şəhər İd-si</th>
-              <th className={style.componentsPage_bottom_header_title}>Şəhər Adı</th>
-              <th className={style.componentsPage_bottom_header_title}>Şəhər Nömrəsi</th>
-              <th className={style.componentsPage_bottom_header_title}>Dəyişiklik</th>
+              <div className={style.componentsPage_bottom_header_title}>Şəhər İd-si</div>
+              <div className={style.componentsPage_bottom_header_title}>Şəhər Adı</div>
+              <div className={style.componentsPage_bottom_header_title}>Şəhər Nömrəsi</div>
+              <div className={style.componentsPage_bottom_header_title}>Dəyişiklik</div>
             </div>
             <div className={style.componentsPage_bottom_main_container}>
               {filteredParameters.map((param) => (
-                <div className={style.componentsPage_bottom_main} key={param.parameterId}>
+                <div className={style.componentsPage_bottom_main} key={param.cityId}>
                   <span className={style.componentsPage_bottom_main_productTitle}>{param.cityId}</span>
                   <span className={style.componentsPage_bottom_main_productTitle}>{param.title}</span>
                   <span className={style.componentsPage_bottom_main_productTitle}>
@@ -123,7 +94,7 @@ const CityComponent = ({ id }) => {
                   <div className={style.componentsPage_bottom_main_iconBox}>
                     <FaTrash
                       className={style.componentsPage_bottom_main_iconBox_icon}
-                      onClick={() => handleDelete(param.parameterId)}
+                      
                     />
                     {param.parameterTypeTitle === "select" && (
                       <FaMask className={style.componentsPage_bottom_main_iconBox_icon} onClick={() => handleClickParametrModal(param.parameterId)}/>
