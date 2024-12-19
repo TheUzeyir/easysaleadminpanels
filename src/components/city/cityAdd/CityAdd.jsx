@@ -3,24 +3,25 @@ import style from "./cityAdd.module.css";
 import Header from '../../../layout/header/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';   
 
 const CityAdd = () => {
   const [title, setTitle] = useState('');
   const [orderWeight, setOrderWeight] = useState('0');
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     if (!title) {
-      setMessage('Zəhmət olmasa bütün sahələri doldurun.');
+      toast.error('Zəhmət olmasa bütün sahələri doldurun.');
       return;
     }
 
     const payload = {
       title: title,
-      orderWeight: parseInt(orderWeight, 10), 
+      orderWeight: parseInt(orderWeight, 10),
     };
 
     try {
@@ -34,16 +35,17 @@ const CityAdd = () => {
         }
       );
 
-      if (response.status === 200) {
-        setMessage('Şəhər uğurla əlavə edildi!');
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Şəhər uğurla əlavə edildi!');
         setTitle('');
-        setOrderWeight('0'); 
-        navigate(-1); 
+        setOrderWeight('0');
+        setTimeout(() => navigate(-1), 3000); // 3 saniyədən sonra geri dön
       } else {
-        setMessage('Şəhər əlavə etmək alınmadı. Yenidən cəhd edin.');
+        toast.error('Şəhər əlavə etmək alınmadı. Yenidən cəhd edin.');
       }
     } catch (error) {
       console.error('Xəta baş verdi:', error);
+      toast.error('Xəta baş verdi. Yenidən cəhd edin.');
     }
   };
 
@@ -85,6 +87,7 @@ const CityAdd = () => {
           </form>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </div>
   );
 };

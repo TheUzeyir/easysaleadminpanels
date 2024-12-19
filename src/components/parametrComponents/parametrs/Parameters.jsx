@@ -8,16 +8,18 @@ import { useNavigate } from 'react-router';
 import ParametrBarModal from '../../../layout/parametrBar/ParametrBarModal';
 import ParametrsModal from './ParametrsModal';
 
-const CategoryPage = ({ id }) => {
+const Parameters = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isParametrModal, setIsParametrModal] = useState(false);
   const [parameters, setParameters] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedParameterId, setSelectedParameterId] = useState(null);
   const navigate = useNavigate();
 
   const handleClickModal = () => {
     setIsModalOpen((prev) => !prev);
   };
+  
   const handleClickParametrModal = (parameterId) => {
     setSelectedParameterId(parameterId); 
     setIsParametrModal(true);
@@ -26,6 +28,7 @@ const CategoryPage = ({ id }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
   const CloseParametrModal = () => {
     setIsParametrModal(false);
     setSelectedParameterId(null); 
@@ -71,6 +74,13 @@ const CategoryPage = ({ id }) => {
     fetchParameters();
   }, []);
 
+  // Filter parameters based on search term
+  const filteredParameters = parameters.filter((param) =>
+    param.parameterTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    param.categoryTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    param.parameterTypeTitle.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className={style.componentsPage_container}>
       <Header />
@@ -81,7 +91,9 @@ const CategoryPage = ({ id }) => {
             <input
               className={style.componentsPage_header_input}
               type="text"
-              placeholder="Search..."
+              placeholder="Axtarış et..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <FaSearch className={style.componentsPage_header_input_icon} />
             <button
@@ -102,7 +114,7 @@ const CategoryPage = ({ id }) => {
               <p className={style.componentsPage_bottom_header_title}>Dəyişiklık</p>
             </div>
             <div className={style.componentsPage_bottom_main_container}>
-              {parameters.map((param) => (
+              {filteredParameters.map((param) => (
                 <div className={style.componentsPage_bottom_main} key={param.parameterId}>
                   <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterId}</span>
                   <span className={style.componentsPage_bottom_main_productTitle}>{param.parentParameterId}</span>
@@ -143,4 +155,4 @@ const CategoryPage = ({ id }) => {
   );
 };
 
-export default CategoryPage;
+export default Parameters;

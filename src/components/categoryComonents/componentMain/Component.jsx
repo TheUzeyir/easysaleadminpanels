@@ -10,11 +10,12 @@ import { useNavigate } from 'react-router';
 const ComponentsPage = () => {
   const [deleteBox, setDeleteBox] = useState(false);
   const [dataList, setDataList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // Axtarış üçün state
   const [deletedItems, setDeletedItems] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -42,7 +43,6 @@ const ComponentsPage = () => {
       if (response.data.isSuccessful) {
         setDataList((prevDataList) => prevDataList.filter((item) => item.categoryId !== categoryId));
         setDeletedItems((prevDeletedItems) => [...prevDeletedItems, categoryId]); 
-        
         alert('Category deleted successfully!');
       } else {
         console.error('Failed to delete the category:', response.data);
@@ -81,6 +81,17 @@ const ComponentsPage = () => {
     handleCloseModal(); 
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
+  const filteredDataList = dataList.filter(
+    (item) =>
+      item.categoryTitle.toLowerCase().includes(searchTerm) ||
+      item.parentId?.toLowerCase().includes(searchTerm) ||
+      item.categoryId.toString().includes(searchTerm)
+  );
+
   return (
     <div className={style.componentsPage_container}>
       <Header />
@@ -88,45 +99,59 @@ const ComponentsPage = () => {
         <p className={style.componentsPage_title}>Kategoriyalar</p>
         <div className={style.componentsPage}>
           <div className={style.componentsPage_header}>
-            <input className={style.componentsPage_header_input} type="text" placeholder="Search..." />
+            <input
+              className={style.componentsPage_header_input}
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearch} // Axtarışa qulaq asmaq
+            />
             <FaSearch className={style.componentsPage_header_input_icon} />
-            <button className={style.componentsPage_header_btn} onClick={() => navigate('/componentsAdd')}>
+            <button
+              className={style.componentsPage_header_btn}
+              onClick={() => navigate('/componentsAdd')}
+            >
               <FaPlus /> Yeni kategoriya əlave et
             </button>
           </div>
           <div className={style.componentsPage_bottom}>
             <div className={style.componentsPage_bottom_header}>
-              <p className={style.componentsPage_bottom_header_title}>Kategoriya İd-si</p>
-              <p className={style.componentsPage_bottom_header_title}>Kategoriya başlığı</p>
-              <p className={style.componentsPage_bottom_header_title}>Üst kategoriya adı</p>
-              <p className={style.componentsPage_bottom_header_title}>Şəkil</p>
-              <p className={style.componentsPage_bottom_header_title}>Dəyişiklık</p>
+              <th className={style.componentsPage_bottom_header_title}>Kategoriya İd-si</th>
+              <th className={style.componentsPage_bottom_header_title}>Kategoriya başlığı</th>
+              <th className={style.componentsPage_bottom_header_title}>Üst kategoriya adı</th>
+              <th className={style.componentsPage_bottom_header_title}>Şəkil</th>
+              <th className={style.componentsPage_bottom_header_title}>Dəyişiklık</th>
             </div>
             {loading ? (
               <h4>Loading categories...</h4>
             ) : (
-              dataList.map((item, index) => (
-                <div key={`${item.categoryId}-${index}`} className={style.componentsPage_bottom_main_container}>
-                  <div className={`${style.componentsPage_bottom_main} ${deleteBox ? style.componentsPage_bottom_main_displayNone : ""}`}>
+              filteredDataList.map((item, index) => (
+                <div
+                  key={`${item.categoryId}-${index}`}
+                  className={style.componentsPage_bottom_main_container}
+                >
+                  <div
+                    className={`${style.componentsPage_bottom_main} ${deleteBox ? style.componentsPage_bottom_main_displayNone : ''}`}
+                  >
                     <p className={style.componentsPage_bottom_main_productTitle}>{item.categoryId}</p>
                     <p className={style.componentsPage_bottom_main_productTitle}>{item.categoryTitle}</p>
                     <p className={style.componentsPage_bottom_main_productParentId}>{item.parentId || 'Yoxdur'}</p>
                     <div className={style.componentsPage_bottom_main_productImageBox}>
-                      <img 
+                      <img
                         src={item.categoryImage}
-                        alt={item.categoryTitle} 
+                        alt={item.categoryTitle}
                         className={style.componentsPage_bottom_main_productImage}
                       />
                     </div>
                     <div className={style.componentsPage_bottom_main_iconBox}>
-                      <FaPenFancy className={style.componentsPage_bottom_main_iconBox_icon} 
-                        onClick={() => handleEditClick(item)} 
+                      <FaPenFancy
+                        className={style.componentsPage_bottom_main_iconBox_icon}
+                        onClick={() => handleEditClick(item)}
                       />
-                      <FaTrash 
-                        className={style.componentsPage_bottom_main_iconBox_icon} 
-                        onClick={() => clickTrashBox(item.categoryId)} 
+                      <FaTrash
+                        className={style.componentsPage_bottom_main_iconBox_icon}
+                        onClick={() => clickTrashBox(item.categoryId)}
                       />
-                      
                     </div>
                   </div>
                 </div>
@@ -138,10 +163,10 @@ const ComponentsPage = () => {
 
       {isModalOpen && selectedItem && (
         <div className={style.modalOverlay}>
-          <ComponentsUpdate 
-            item={selectedItem} 
+          <ComponentsUpdate
+            item={selectedItem}
             onUpdateSuccess={handleUpdateSuccess}
-            onClose={handleCloseModal}                    
+            onClose={handleCloseModal}
           />
         </div>
       )}

@@ -15,18 +15,18 @@ const ParametrBar = ({ hideBar }) => {
   return (
     <div className={style.headerSideBar}>
     <div className={style.headerSideBar_header}>
-      <span className={style.headerSideBar_logo}>EasySale</span>  
+      <span className={style.headerSideBar_logo}>JetEvimAdmin</span>  
       <FaBarsStaggered className={style.headerSideBar_header_icon} onClick={hideBar}/> 
     </div>
-    <p className={style.headerSideBar_title}>All Page</p>
+    <p className={style.headerSideBar_title}>Bütün səhifələr</p>
     <div className={style.headerSideBar_title_card}> 
-        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/category")}><BiSolidCategory className={style.categoryBox_card_box_icon} />Category</div>
-        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/users")}><FaUser className={style.categoryBox_card_box_icon} />User</div>
-        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/parametrs")}><IoSettings className={style.categoryBox_card_box_icon} />Parametr</div>
-        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/parametrType")}><IoSettings className={style.categoryBox_card_box_icon} />ParametrType</div>
-        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/")}><MdReportProblem className={style.categoryBox_card_box_icon} />Report</div>
-        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/mask")}><FaMask className={style.categoryBox_card_box_icon} />Mask</div>
-        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/city")}><FaCity className={style.categoryBox_card_box_icon} />Cities</div>
+        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/category")}><BiSolidCategory className={style.categoryBox_card_box_icon} />Kategoriyalar</div>
+        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/users")}><FaUser className={style.categoryBox_card_box_icon} />İstifadəçilər</div>
+        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/parametrs")}><IoSettings className={style.categoryBox_card_box_icon} />Parameterlər</div>
+        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/parametrType")}><IoSettings className={style.categoryBox_card_box_icon} />Parameter Tipləri</div>
+        {/* <div className={style.headerSideBar_title_box} onClick={()=>navigate("/")}><MdReportProblem className={style.categoryBox_card_box_icon} />Report</div> */}
+        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/mask")}><FaMask className={style.categoryBox_card_box_icon} />Parameter Masklar</div>
+        <div className={style.headerSideBar_title_box} onClick={()=>navigate("/city")}><FaCity className={style.categoryBox_card_box_icon} />Şəhərlər</div>
     </div>
   </div>
   )

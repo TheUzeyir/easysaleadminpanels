@@ -4,7 +4,7 @@ import ComponentsPage from "./components/categoryComonents/componentMain/Compone
 import ComponentsAdd from "./components/categoryComonents/componentsAdd/ComponentsAdd"
 import Login from "./page/login/Login"
 import UserInfo from "./components/userComponents/userInfo/UserInfo"
-import Parametrs from "./components/parametrComponents/parametrs/Parametrs"
+import Parametrs from "./components/parametrComponents/parametrs/Parameters"
 import ParametrAdd from "./components/parametrComponents/parametrsAdd/ParametrAdd"
 import UsersPage from "./components/userComponents/usersPage/UsersPage"
 import ParametrType from "./components/parametrTypeComponents/parametrtype/ParametrType"
@@ -20,7 +20,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/main" element={<Main/>}/>
+        <Route path="/main" element={<ComponentsPage/>}/>
         <Route path="/category" element={<ComponentsPage/>}/>
         <Route path="/componentsAdd" element={<ComponentsAdd/>}/>
         <Route path="/userInfo" element={<UserInfo/>}/>
