@@ -91,7 +91,6 @@ const ParametrAdd = ({ id }) => {
       }
 
       const result = await response.json();
-      console.log("Parameter created successfully:", result);
       alert("Parameter uğurla əlavə edildi.");
       navigate(-1);
     } catch (error) {

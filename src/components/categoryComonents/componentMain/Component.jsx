@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router';
 const ComponentsPage = () => {
   const [deleteBox, setDeleteBox] = useState(false);
   const [dataList, setDataList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // Axtarış üçün state
+  const [searchTerm, setSearchTerm] = useState(""); 
   const [deletedItems, setDeletedItems] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -20,7 +20,6 @@ const ComponentsPage = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -36,45 +35,38 @@ const ComponentsPage = () => {
       setLoading(false);
     }
   };
-
   const clickTrashBox = async (categoryId) => {
     const userConfirmed = window.confirm("Silmek istediyinize eminsinizmi?");
-    if (!userConfirmed) return; // İstifadəçi təsdiqləmədikdə çıxır
-
+    if (!userConfirmed) return;
+  
     try {
       const response = await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/Category/delete-category/${categoryId}`);
       if (response.data.isSuccessful) {
         setDataList((prevDataList) => prevDataList.filter((item) => item.categoryId !== categoryId));
-        setDeletedItems((prevDeletedItems) => [...prevDeletedItems, categoryId]); 
+        setDeletedItems((prevDeletedItems) => [...prevDeletedItems, categoryId]);
         alert('Kategoriya silindi!');
       } else {
-        console.error('Failed to delete the category:', response.data);
-        alert('Failed to delete category.');
+        alert('Kategoriya silinə bilmədi: ' + response.data.messages.join(', '));
       }
     } catch (error) {
       if (error.response) {
-        console.error('Error response from server:', error.response.data);
-        alert(`Error deleting category: ${error.response.data.message}`);
+        alert(`Xəta baş verdi: ${error.response.data.messages.join(', ')}`);
       } else if (error.request) {
-        console.error('No response from server:', error.request);
-        alert('No response from server. Please try again later.');
+        alert('Serverdən cavab alınmadı. Zəhmət olmasa bir daha yoxlayın.');
       } else {
-        console.error('Error setting up request:', error.message);
-        alert(`Error: ${error.message}`);
+        alert(`Xəta: ${error.message}`);
       }
+      return;
     }
   };
-
   const handleEditClick = (item) => {
     setSelectedItem(item); 
     setIsModalOpen(true); 
   };
-
   const handleCloseModal = () => {
     setSelectedItem(null); 
     setIsModalOpen(false); 
   };
-
   const handleUpdateSuccess = (updatedItem) => {
     setDataList((prevDataList) => 
       prevDataList.map(item => 
@@ -83,7 +75,6 @@ const ComponentsPage = () => {
     ); 
     handleCloseModal(); 
   };
-
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
@@ -94,7 +85,6 @@ const ComponentsPage = () => {
       item.parentId?.toLowerCase().includes(searchTerm) ||
       item.categoryId.toString().includes(searchTerm)
   );
-
   return (
     <div className={style.componentsPage_container}>
       <Header />
@@ -163,7 +153,6 @@ const ComponentsPage = () => {
           </div>
         </div>
       </div>
-
       {isModalOpen && selectedItem && (
         <div className={style.modalOverlay}>
           <ComponentsUpdate
@@ -176,5 +165,4 @@ const ComponentsPage = () => {
     </div>
   );
 };
-
 export default ComponentsPage;
