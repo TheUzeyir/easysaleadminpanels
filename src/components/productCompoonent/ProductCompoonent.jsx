@@ -22,7 +22,7 @@ const ProductComponent = () => {
   useEffect(() => {
     axios
       .get(
-        "https://restartbaku-001-site4.htempurl.com/api/Product/search?pageSize=10"
+        "https://restartbaku-001-site4.htempurl.com/api/Product/search"
       )
       .then((response) => {
         if (response.data.isSuccessful && response.data.data.items) {

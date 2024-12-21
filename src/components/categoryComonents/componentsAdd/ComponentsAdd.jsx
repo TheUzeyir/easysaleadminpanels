@@ -91,9 +91,9 @@ const ComponentsAdd = () => {
   return (
     <div className={style.componentsAdd_container}>
       {isParametrBarVisible && <ParametrBar hideBar={() => setIsParametrBarVisible(false)} />}
-      <div className={style.cityAdd_main}>
+      <div className={style.componentAdd_main_box}>
         <AiOutlineBars
-          className={style.cityAdd_main_icon}
+          className={style.componentAdd_main_icon}
           onClick={toggleParametrBar}
         />
         <Header />

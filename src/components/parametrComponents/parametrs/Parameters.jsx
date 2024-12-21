@@ -16,14 +16,14 @@ const Parameters = ({ id }) => {
   const [parameters, setParameters] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedParameterId, setSelectedParameterId] = useState(null);
-  const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+        const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
   
   const navigate = useNavigate();
 
   const handleClickModal = () => {
     setIsModalOpen((prev) => !prev);
   };
-  
+
   const handleClickParametrModal = (parameterId) => {
     setSelectedParameterId(parameterId); 
     setIsParametrModal(true);
@@ -84,6 +84,7 @@ const Parameters = ({ id }) => {
     param.parameterTypeTitle.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  
   const toggleParametrBar = () => {
     setIsParametrBarVisible(!isParametrBarVisible); 
   };
@@ -119,22 +120,18 @@ const Parameters = ({ id }) => {
             <div className={style.componentsPage_bottom}>
               <div className={style.componentsPage_bottom_header}>
                 <p className={style.componentsPage_bottom_header_title}>Parameter ünikal İd-si</p>
-                <p className={style.componentsPage_bottom_header_title}>Üst Parameterin ünikal İd-si</p>
                 <p className={style.componentsPage_bottom_header_title}> Parameterin başlığı</p>
                 <p className={style.componentsPage_bottom_header_title}>Kategoriya başlığı</p>
                 <p className={style.componentsPage_bottom_header_title}>Parameterin Tipi</p>
-                <p className={style.componentsPage_bottom_header_title}>Parameterin Şəkili</p>
                 <p className={style.componentsPage_bottom_header_title}>Dəyişiklık</p>
               </div>
               <div className={style.componentsPage_bottom_main_container}>
                 {filteredParameters.map((param) => (
                   <div className={style.componentsPage_bottom_main} key={param.parameterId}>
                     <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterId}</span>
-                    <span className={style.componentsPage_bottom_main_productTitle}>{param.parentParameterId}</span>
                     <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTitle}</span>
                     <span className={style.componentsPage_bottom_main_productTitle}>{param.categoryTitle}</span>
                     <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTypeTitle}</span>
-                    <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterLogo}</span>
                     <div className={style.componentsPage_bottom_main_iconBox}>
                       <FaPenFancy
                         className={style.componentsPage_bottom_main_iconBox_icon}

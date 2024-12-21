@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import { FaPenFancy, FaTrash } from 'react-icons/fa6';
-import { useNavigate } from 'react-router';
 import axios from 'axios';
 import Header from '../../../layout/header/Header';
-import ParametrBar from '../../../layout/parametrBar/ParametrBar';
 import style from './component.module.css';
 import ComponentsUpdate from '../componentsUpdate/ComponentsUpdate';
+import { useNavigate } from 'react-router';
 import { AiOutlineBars } from "react-icons/ai";
+import ParametrBar from '../../../layout/parametrBar/ParametrBar';
 
 const ComponentsPage = () => {
   const [deleteBox, setDeleteBox] = useState(false);
   const [dataList, setDataList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [deletedItems, setDeletedItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [deletedItems, setDeletedItems] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+      const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
   }, []);
-
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -39,51 +39,46 @@ const ComponentsPage = () => {
       setLoading(false);
     }
   };
-
   const clickTrashBox = async (categoryId) => {
+    const userConfirmed = window.confirm("Silmek istediyinize eminsinizmi?");
+    if (!userConfirmed) return;
+  
     try {
       const response = await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/Category/delete-category/${categoryId}`);
       if (response.data.isSuccessful) {
         setDataList((prevDataList) => prevDataList.filter((item) => item.categoryId !== categoryId));
         setDeletedItems((prevDeletedItems) => [...prevDeletedItems, categoryId]);
-        alert('Category deleted successfully!');
+        alert('Kategoriya silindi!');
       } else {
-        console.error('Failed to delete the category:', response.data);
-        alert('Failed to delete category.');
+        alert('Kategoriya silinə bilmədi: ' + response.data.messages.join(', '));
       }
     } catch (error) {
       if (error.response) {
-        console.error('Error response from server:', error.response.data);
-        alert(`Error deleting category: ${error.response.data.message}`);
+        alert(`Xəta baş verdi: ${error.response.data.messages.join(', ')}`);
       } else if (error.request) {
-        console.error('No response from server:', error.request);
-        alert('No response from server. Please try again later.');
+        alert('Serverdən cavab alınmadı. Zəhmət olmasa bir daha yoxlayın.');
       } else {
-        console.error('Error setting up request:', error.message);
-        alert(`Error: ${error.message}`);
+        alert(`Xəta: ${error.message}`);
       }
+      return;
     }
   };
-
   const handleEditClick = (item) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
+    setSelectedItem(item); 
+    setIsModalOpen(true); 
   };
-
   const handleCloseModal = () => {
-    setSelectedItem(null);
-    setIsModalOpen(false);
+    setSelectedItem(null); 
+    setIsModalOpen(false); 
   };
-
   const handleUpdateSuccess = (updatedItem) => {
-    setDataList((prevDataList) =>
-      prevDataList.map(item =>
+    setDataList((prevDataList) => 
+      prevDataList.map(item => 
         item.categoryId === updatedItem.categoryId ? updatedItem : item
       )
-    );
-    handleCloseModal();
+    ); 
+    handleCloseModal(); 
   };
-
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
@@ -99,14 +94,15 @@ const ComponentsPage = () => {
     setIsParametrBarVisible(!isParametrBarVisible); 
   };
 
-  return (
+
+  return ( 
     <div className={style.componentsPage_container}>
-        {isParametrBarVisible && <ParametrBar hideBar={() => setIsParametrBarVisible(false)} />}
+      {isParametrBarVisible && <ParametrBar hideBar={() => setIsParametrBarVisible(false)} />}
       <div className={style.componentsPage_main}>
-        <AiOutlineBars
-          className={style.componentsPage_main_icon}
-          onClick={toggleParametrBar}
-        />
+          <AiOutlineBars
+            className={style.componentsPage_main_icon}
+            onClick={toggleParametrBar}
+          />
         <Header />
         <div className="container">
           <p className={style.componentsPage_title}>Kategoriyalar</p>
@@ -117,7 +113,7 @@ const ComponentsPage = () => {
                 type="text"
                 placeholder="Search..."
                 value={searchTerm}
-                onChange={handleSearch}
+                onChange={handleSearch} 
               />
               <FaSearch className={style.componentsPage_header_input_icon} />
               <button
@@ -136,7 +132,7 @@ const ComponentsPage = () => {
                 <th className={style.componentsPage_bottom_header_title}>Dəyişiklık</th>
               </div>
               {loading ? (
-                <h4>Loading categories...</h4>
+                <h4>Kategoriyalar yuklenir...</h4>
               ) : (
                 filteredDataList.map((item, index) => (
                   <div
@@ -174,7 +170,6 @@ const ComponentsPage = () => {
           </div>
         </div>
       </div>
-
       {isModalOpen && selectedItem && (
         <div className={style.modalOverlay}>
           <ComponentsUpdate
@@ -187,5 +182,4 @@ const ComponentsPage = () => {
     </div>
   );
 };
-
 export default ComponentsPage;
