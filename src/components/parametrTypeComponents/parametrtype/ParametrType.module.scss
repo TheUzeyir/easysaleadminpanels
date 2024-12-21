@@ -1,6 +1,25 @@
 .componentsPage_container{
     background: #F2F7FB;
     height: 100vh;
+    display: flex;
+}
+
+.componentsPage_main{
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+    white-space: nowrap; 
+    position: relative;
+}
+
+.componentsPage_main_icon{
+    position: absolute;
+    font-size: 20px;
+    z-index: 5;
+    top: 7%;
+    left: 4%;
+    color: white;
+    cursor: pointer;
 }
 
 .componentsPage_title{
@@ -71,7 +90,7 @@
 }
 
 .componentsPage_bottom_main_productTitle_typeTitle,
-.componentsPage_bottom_main_productTitle_typeID,
+.componentsPage_bottom_main_productTitle_typeID, 
 .componentsPage_bottom_main_productTitle_typeStatus,
 .componentsPage_bottom_main_productTitle_typeWeight{
     width: 100%;

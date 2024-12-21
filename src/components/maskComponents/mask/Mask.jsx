@@ -4,12 +4,16 @@ import { useNavigate } from 'react-router';
 import Header from "../../../layout/header/Header";
 import { Accordion, Card } from 'react-bootstrap';
 import axios from 'axios';
+import style from './mask.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AiOutlineBars } from "react-icons/ai";
+import ParametrBar from '../../../layout/parametrBar/ParametrBar';
 
 const Mask = () => {
   const navigate = useNavigate();
   const [parameters, setParameters] = useState([]);
   const [loading, setLoading] = useState(true);
+    const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
 
   useEffect(() => {
     const fetchParameters = async () => {
@@ -68,54 +72,66 @@ const Mask = () => {
     }
   };
 
+  const toggleParametrBar = () => {
+    setIsParametrBarVisible(!isParametrBarVisible); 
+  };
+
+
   return (
-    <div className="componentsPage_container">
-      <Header />
-      <div className="container">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <h5 className="componentsPage_title" style={{ margin: "30px 5px" }}>Parametr Maskları</h5>
-            <div className="componentsPage">
-              <div className="componentsPage_bottom">
-                <Accordion>
-                  {parameters.length > 0 ? (
-                    parameters.map((param) => (
-                      <Card key={param.parameterId} className="accordionCard">
-                        <Accordion.Item eventKey={param.parameterId.toString()}>
-                          <Accordion.Header>{param.parameterTitle}</Accordion.Header>
-                          <Accordion.Body>
-                            <div className="componentsPage_bottom_main_maskList">
-                              {param.masks.length > 0 ? (
-                                param.masks.map((mask, index) => (
-                                  <div key={index} className="componentsPage_bottom_main_maskItem mt-2">
-                                    <p className="maskTitle">{mask.title}</p>
-                                    <div className="componentsPage_bottom_main_iconBox">
-                                      <FaTrash
-                                        className="componentsPage_bottom_main_iconBox_icon"
-                                        title="Delete"
-                                        onClick={() => handleDeleteMask(param.parameterId, mask.id)} 
-                                      />
+    <div className={style.componentsPage_container}>
+      {isParametrBarVisible && <ParametrBar hideBar={() => setIsParametrBarVisible(false)} />}
+      <div className={style.componentsPage_main}>
+        <AiOutlineBars
+          className={style.mask_icon}
+          onClick={toggleParametrBar}
+        />
+        <Header />
+        <div className="container">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <h5 className="componentsPage_title" style={{ margin: "30px 5px" }}>Parametr Maskları</h5>
+              <div className="componentsPage">
+                <div className="componentsPage_bottom">
+                  <Accordion>
+                    {parameters.length > 0 ? (
+                      parameters.map((param) => (
+                        <Card key={param.parameterId} className="accordionCard">
+                          <Accordion.Item eventKey={param.parameterId.toString()}>
+                            <Accordion.Header>{param.parameterTitle}</Accordion.Header>
+                            <Accordion.Body>
+                              <div className="componentsPage_bottom_main_maskList">
+                                {param.masks.length > 0 ? (
+                                  param.masks.map((mask, index) => (
+                                    <div key={index} className="componentsPage_bottom_main_maskItem mt-2">
+                                      <p className="maskTitle">{mask.title}</p>
+                                      <div className="componentsPage_bottom_main_iconBox">
+                                        <FaTrash
+                                          className="componentsPage_bottom_main_iconBox_icon"
+                                          title="Delete"
+                                          onClick={() => handleDeleteMask(param.parameterId, mask.id)} 
+                                        />
+                                      </div>
                                     </div>
-                                  </div>
-                                ))
-                              ) : (
-                                <p>Uyğun parametere maskımız yoxdur.</p>
-                              )}
-                            </div>
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      </Card>
-                    ))
-                  ) : (
-                    <p>Parameter tapılmadlı.</p>
-                  )}
-                </Accordion>
+                                  ))
+                                ) : (
+                                  <p>Uyğun parametere maskımız yoxdur.</p>
+                                )}
+                              </div>
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        </Card>
+                      ))
+                    ) : (
+                      <p>Parameter tapılmadlı.</p>
+                    )}
+                  </Accordion>
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

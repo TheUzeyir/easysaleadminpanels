@@ -6,9 +6,13 @@ import style from "./productCompoonent.module.css";
 import { PiWarningCircleFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AiOutlineBars } from "react-icons/ai";
+import ParametrBar from '../../layout/parametrBar/ParametrBar';
 
 const ProductComponent = () => {
   const [data, setData] = useState([]);
+      const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+
   const navigate = useNavigate();
 
   const clickTrashBox = (productId) => {
@@ -35,61 +39,73 @@ const ProductComponent = () => {
 
   };
 
+  const toggleParametrBar = () => {
+    setIsParametrBarVisible(!isParametrBarVisible); 
+  };
+
+
   return (
     <div className={style.componentsPage_container}>
-      <Header />
-      <div className="container">
-        <p className={style.componentsPage_title}>Add Attribute</p>
-        <div className={style.componentsPage}>
-          <div className={style.componentsPage_header}>
-            <input
-              className={style.componentsPage_header_input}
-              type="text"
-              placeholder="Search products..."
-            />
-            <FaSearch className={style.componentsPage_header_input_icon} />
-          </div>
-          <div className={style.componentsPage_bottom}>
-            <div className={style.componentsPage_bottom_header}>
-              <p className={style.componentsPage_bottom_header_title}>Product</p>
-              <p className={style.componentsPage_bottom_header_title}>Status</p>
-              <p className={style.componentsPage_bottom_header_title}>Action</p> 
+      {isParametrBarVisible && <ParametrBar hideBar={() => setIsParametrBarVisible(false)} />}
+      <div className={style.componentsPage_main}>
+        <AiOutlineBars
+          className={style.componentsPage_main_icon}
+          onClick={toggleParametrBar}
+        />
+        <Header />
+        <div className="container">
+          <p className={style.componentsPage_title}>Add Attribute</p>
+          <div className={style.componentsPage}>
+            <div className={style.componentsPage_header}>
+              <input
+                className={style.componentsPage_header_input}
+                type="text"
+                placeholder="Search products..."
+              />
+              <FaSearch className={style.componentsPage_header_input_icon} />
             </div>
-            {data.map((item) => (
-              <div
-                key={item.productId}
-                className={style.componentsPage_bottom_main}
-                onClick={() => handleProductClick(item.productId)}
-              >
-                <p className={style.componentsPage_bottom_main_productParentId}>
-                  {item.productTitle}
-                </p>
-                {item.productStatusId === 1 && (
-                  <button className={style.componentsPage_bottom_main_btn}>
-                    <PiWarningCircleFill /> Pedding
-                  </button>
-                )}
-                {item.productStatusId === 2 && (
-                  <button className={style.detailPage_main_head_right_btn_ok}>
-                    <FcOk /> Testiq edildi
-                  </button>
-                )}
-                <div className={style.componentsPage_bottom_main_iconBox}>
-                  <FaTrash
-                    className={style.componentsPage_bottom_main_iconBox_icon}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      clickTrashBox(item.productId);
-                    }}
-                  />
-                </div>
+            <div className={style.componentsPage_bottom}>
+              <div className={style.componentsPage_bottom_header}>
+                <p className={style.componentsPage_bottom_header_title}>Product</p>
+                <p className={style.componentsPage_bottom_header_title}>Status</p>
+                <p className={style.componentsPage_bottom_header_title}>Action</p> 
               </div>
-            ))}
+              {data.map((item) => (
+                <div
+                  key={item.productId}
+                  className={style.componentsPage_bottom_main}
+                  onClick={() => handleProductClick(item.productId)}
+                >
+                  <p className={style.componentsPage_bottom_main_productParentId}>
+                    {item.productTitle}
+                  </p>
+                  {item.productStatusId === 1 && (
+                    <button className={style.componentsPage_bottom_main_btn}>
+                      <PiWarningCircleFill /> Pedding
+                    </button>
+                  )}
+                  {item.productStatusId === 2 && (
+                    <button className={style.detailPage_main_head_right_btn_ok}>
+                      <FcOk /> Testiq edildi
+                    </button>
+                  )}
+                  <div className={style.componentsPage_bottom_main_iconBox}>
+                    <FaTrash
+                      className={style.componentsPage_bottom_main_iconBox_icon}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        clickTrashBox(item.productId);
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}; 
 
 export default ProductComponent;

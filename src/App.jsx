@@ -1,5 +1,4 @@
 import {BrowserRouter,Routes,Route} from "react-router-dom"
-import Main from "./page/main/Main"
 import ComponentsPage from "./components/categoryComonents/componentMain/Component"
 import ComponentsAdd from "./components/categoryComonents/componentsAdd/ComponentsAdd"
 import Login from "./page/login/Login"
@@ -15,7 +14,7 @@ import CityComponent from "./components/city/cityComponents/City"
 import CityAdd from "./components/city/cityAdd/CityAdd"
 import ProductComponent from "./components/productCompoonent/ProductCompoonent"
 
-function App() {
+function App() { 
 
   return (
     <>

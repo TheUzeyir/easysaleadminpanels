@@ -1,7 +1,27 @@
-.componentAdd {
-  background: white;
-  padding: 20px;
-  margin-top: 20px;
+.componentsAdd_container {
+  display: flex;
+}
+
+.componentAdd_main {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.componentAdd_main_icon {
+  position: absolute;
+  font-size: 20px;
+  z-index: 5;
+  top: 8%;
+  left: 4%;
+  color: white;
+  cursor: pointer;
 }
 
 .componentAdd_title {
@@ -25,8 +45,6 @@
 }
 
 .componentAdd_main {
-  margin: 40px 0;
-  padding: 20px 0;
   display: flex;
   justify-content: space-between;
   height: 300px;

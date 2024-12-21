@@ -7,6 +7,8 @@ import { FaMask } from 'react-icons/fa6';
 import { useNavigate } from 'react-router';
 import ParametrBarModal from '../../../layout/parametrBar/ParametrBarModal';
 import ParametrsModal from './ParametrsModal';
+import { AiOutlineBars } from "react-icons/ai";
+import ParametrBar from '../../../layout/parametrBar/ParametrBar';
 
 const Parameters = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,6 +16,8 @@ const Parameters = ({ id }) => {
   const [parameters, setParameters] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedParameterId, setSelectedParameterId] = useState(null);
+  const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+  
   const navigate = useNavigate();
 
   const handleClickModal = () => {
@@ -74,69 +78,79 @@ const Parameters = ({ id }) => {
     fetchParameters();
   }, []);
 
-  // Filter parameters based on search term
   const filteredParameters = parameters.filter((param) =>
     param.parameterTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
     param.categoryTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
     param.parameterTypeTitle.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const toggleParametrBar = () => {
+    setIsParametrBarVisible(!isParametrBarVisible); 
+  };
+
   return (
     <div className={style.componentsPage_container}>
-      <Header />
-      <div className="container">
-        <p className={style.componentsPage_title}>Parameterlər</p>
-        <div className={style.componentsPage}>
-          <div className={style.componentsPage_header}>
-            <input
-              className={style.componentsPage_header_input}
-              type="text"
-              placeholder="Axtarış et..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <FaSearch className={style.componentsPage_header_input_icon} />
-            <button
-              className={style.componentsPage_header_btn}
-              onClick={() => navigate('/parametrAdd')}
-            >
-              <FaPlus /> Yeni parameter əlave et
-            </button>
-          </div>
-          <div className={style.componentsPage_bottom}>
-            <div className={style.componentsPage_bottom_header}>
-              <p className={style.componentsPage_bottom_header_title}>Parameter ünikal İd-si</p>
-              <p className={style.componentsPage_bottom_header_title}>Üst Parameterin ünikal İd-si</p>
-              <p className={style.componentsPage_bottom_header_title}> Parameterin başlığı</p>
-              <p className={style.componentsPage_bottom_header_title}>Kategoriya başlığı</p>
-              <p className={style.componentsPage_bottom_header_title}>Parameterin Tipi</p>
-              <p className={style.componentsPage_bottom_header_title}>Parameterin Şəkili</p>
-              <p className={style.componentsPage_bottom_header_title}>Dəyişiklık</p>
+      {isParametrBarVisible && <ParametrBar hideBar={() => setIsParametrBarVisible(false)} />}
+      <div className={style.componentsPage_main}>
+        <AiOutlineBars
+          className={style.componentsPage_main_icon}
+          onClick={toggleParametrBar}
+        />
+        <Header />
+        <div className="container">
+          <p className={style.componentsPage_title}>Parameterlər</p>
+          <div className={style.componentsPage}>
+            <div className={style.componentsPage_header}>
+              <input
+                className={style.componentsPage_header_input}
+                type="text"
+                placeholder="Axtarış et..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <FaSearch className={style.componentsPage_header_input_icon} />
+              <button
+                className={style.componentsPage_header_btn}
+                onClick={() => navigate('/parametrAdd')}
+              >
+                <FaPlus /> Yeni parameter əlave et
+              </button>
             </div>
-            <div className={style.componentsPage_bottom_main_container}>
-              {filteredParameters.map((param) => (
-                <div className={style.componentsPage_bottom_main} key={param.parameterId}>
-                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterId}</span>
-                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parentParameterId}</span>
-                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTitle}</span>
-                  <span className={style.componentsPage_bottom_main_productTitle}>{param.categoryTitle}</span>
-                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTypeTitle}</span>
-                  <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterLogo}</span>
-                  <div className={style.componentsPage_bottom_main_iconBox}>
-                    <FaPenFancy
-                      className={style.componentsPage_bottom_main_iconBox_icon}
-                      onClick={handleClickModal}
-                    />
-                    <FaTrash
-                      className={style.componentsPage_bottom_main_iconBox_icon}
-                      onClick={() => handleDelete(param.parameterId)}
-                    />
-                    {param.parameterTypeTitle === "select" && (
-                      <FaMask className={style.componentsPage_bottom_main_iconBox_icon} onClick={() => handleClickParametrModal(param.parameterId)}/>
-                    )}
+            <div className={style.componentsPage_bottom}>
+              <div className={style.componentsPage_bottom_header}>
+                <p className={style.componentsPage_bottom_header_title}>Parameter ünikal İd-si</p>
+                <p className={style.componentsPage_bottom_header_title}>Üst Parameterin ünikal İd-si</p>
+                <p className={style.componentsPage_bottom_header_title}> Parameterin başlığı</p>
+                <p className={style.componentsPage_bottom_header_title}>Kategoriya başlığı</p>
+                <p className={style.componentsPage_bottom_header_title}>Parameterin Tipi</p>
+                <p className={style.componentsPage_bottom_header_title}>Parameterin Şəkili</p>
+                <p className={style.componentsPage_bottom_header_title}>Dəyişiklık</p>
+              </div>
+              <div className={style.componentsPage_bottom_main_container}>
+                {filteredParameters.map((param) => (
+                  <div className={style.componentsPage_bottom_main} key={param.parameterId}>
+                    <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterId}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle}>{param.parentParameterId}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTitle}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle}>{param.categoryTitle}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterTypeTitle}</span>
+                    <span className={style.componentsPage_bottom_main_productTitle}>{param.parameterLogo}</span>
+                    <div className={style.componentsPage_bottom_main_iconBox}>
+                      <FaPenFancy
+                        className={style.componentsPage_bottom_main_iconBox_icon}
+                        onClick={handleClickModal}
+                      />
+                      <FaTrash
+                        className={style.componentsPage_bottom_main_iconBox_icon}
+                        onClick={() => handleDelete(param.parameterId)}
+                      />
+                      {param.parameterTypeTitle === "select" && (
+                        <FaMask className={style.componentsPage_bottom_main_iconBox_icon} onClick={() => handleClickParametrModal(param.parameterId)}/>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

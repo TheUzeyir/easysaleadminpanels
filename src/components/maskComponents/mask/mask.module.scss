@@ -1,6 +1,11 @@
 .componentsPage_container{
     background: #F2F7FB;
     height: 100vh;
+    display: flex;
+}
+
+.componentsPage_main{
+    width: 100%;
 }
 
 .componentsPage_title{
@@ -102,7 +107,15 @@
     color: blue;
 }
 
-
+.mask_icon{
+    position: absolute;
+    font-size: 20px;
+    z-index: 5;
+    top: 7%;
+    left: 4%;
+    color: white;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 968px) {
     .componentsPage_bottom {

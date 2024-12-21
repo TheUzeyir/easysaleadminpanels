@@ -1,11 +1,30 @@
 .componentsPage_container{
     background: #F2F7FB;
     height: 100vh;
+    display: flex;
 }
 
 .componentsPage_title{
-    font-weight: bold;
+    font-weight: bold; 
     font-size: 25px;
+}
+
+.componentsPage_main{
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+    white-space: nowrap; 
+    position: relative;
+}
+
+.componentsPage_main_icon{
+    position: absolute;
+    font-size: 20px;
+    z-index: 5;
+    top: 7%;
+    left: 4%;
+    color: white;
+    cursor: pointer;
 }
 
 .componentsPage_header{

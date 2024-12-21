@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import style from "./parametrAdd.module.css";
 import Header from '../../../layout/header/Header';
+import { AiOutlineBars } from "react-icons/ai";
+import ParametrBar from '../../../layout/parametrBar/ParametrBar';
 
 const ParametrAdd = ({ id }) => {
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
+      const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
   const [formData, setFormData] = useState({
     categoryId: "",
     parameterTypeId: "",
@@ -14,7 +17,7 @@ const ParametrAdd = ({ id }) => {
     languageId: 1,
     parameterTitle: ""
   });
-
+ 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -98,125 +101,136 @@ const ParametrAdd = ({ id }) => {
     }
   };
 
+  const toggleParametrBar = () => {
+    setIsParametrBarVisible(!isParametrBarVisible); 
+  };
+
   return (
-    <div className="componentsAdd_container">
-      <Header />
-      <div className="container">
-        <div className={style.componentAdd}>
-          <p className={style.componentAdd_title}>Parameter Əlavə edin</p>
-          <form className={style.componentAdd_form} onSubmit={handleSubmit}>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="categorySelect">Kategoriyanı seçin *</label>
-              <select
-                name="categoryId"
-                id="categorySelect"
-                className={style.componentAdd_header_input}
-                onChange={handleChange}
-                value={formData.categoryId}
-              >
-                <option value="" disabled>
-                  --Kateqoriyanı seçin--
-                </option>
-                {data.map((category) => (
-                  <option key={category.categoryId} value={category.categoryId}>
-                    {category.categoryTitle}
+    <div className={style.componentsAdd_container}> 
+      {isParametrBarVisible && <ParametrBar hideBar={() => setIsParametrBarVisible(false)} />}
+      <div className={style.componentAdd_main}>
+        <AiOutlineBars
+          className={style.componentAdd_main_icon}
+          onClick={toggleParametrBar}
+        />
+        <Header />
+        <div className="container">
+          <div className={style.componentAdd}>
+            <p className={style.componentAdd_title}>Parameter Əlavə edin</p>
+            <form className={style.componentAdd_form} onSubmit={handleSubmit}>
+              <div className={style.componentAdd_header}>
+                <label htmlFor="categorySelect">Kategoriyanı seçin *</label>
+                <select
+                  name="categoryId"
+                  id="categorySelect"
+                  className={style.componentAdd_header_input}
+                  onChange={handleChange}
+                  value={formData.categoryId}
+                >
+                  <option value="" disabled>
+                    --Kateqoriyanı seçin--
                   </option>
-                ))}
-              </select>
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="parameterTypeId">Parameterin Tipini təyin edin *</label>
-              <select
-                name="parameterTypeId"
-                id="parameterTypeId"
-                className={style.componentAdd_header_input}
-                onChange={handleChange}
-                value={formData.parameterTypeId}
-              >
-                <option value="" disabled>
-                  --Parametr Tipini Seçin--
-                </option>
-                {data1.map((parameterType) => (
-                  <option key={parameterType.parameterTypeId} value={parameterType.parameterTypeId}>
-                    {parameterType.parameterTypeTitle}
+                  {data.map((category) => (
+                    <option key={category.categoryId} value={category.categoryId}>
+                      {category.categoryTitle}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={style.componentAdd_header}>
+                <label htmlFor="parameterTypeId">Parameterin Tipini təyin edin *</label>
+                <select
+                  name="parameterTypeId"
+                  id="parameterTypeId"
+                  className={style.componentAdd_header_input}
+                  onChange={handleChange}
+                  value={formData.parameterTypeId}
+                >
+                  <option value="" disabled>
+                    --Parametr Tipini Seçin--
                   </option>
-                ))}
-              </select>
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="isCategory">Parameteriniz globaldırmı? *</label>
-              <select
-                name="isCategory"
-                id="isCategory"
-                className={style.componentAdd_header_input}
-                onChange={handleChange}
-                value={formData.isCategory}
-              >
-                <option value="" disabled>
-                  --Global parametr seçin--
-                </option>
-                <option value="Beli">Bəli</option>
-                <option value="Xeyir">Xeyir</option>
-              </select>
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="parentParameterId">ParametrId *</label>
-              <input
-                id="parentParameterId"
-                name="parentParameterId"
-                type="text"
-                placeholder="Bunu həmişə null daxil edin"
-                className={style.componentAdd_header_input}
-                onChange={handleChange}
-                value={formData.parentParameterId}
-              />
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="parameterLogo">Parameter üçün link daxil edin *</label>
-              <input
-                id="parameterLogo"
-                name="parameterLogo"
-                type="text"
-                placeholder="Parameter ünvanı"
-                className={style.componentAdd_header_input}
-                required
-                onChange={handleChange}
-                value={formData.parameterLogo}
-              />
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="languageId">Dili seçin *</label>
-              <select
-                name="languageId"
-                id="languageId"
-                className={style.componentAdd_header_input}
-                onChange={handleChange}
-                value={formData.languageId}
-              >
-                <option value={1}>English</option>
-                <option value={2}>Azerbaijan</option>
-                <option value={3}>Russian</option>
-              </select>
-            </div>
-            <div className={style.componentAdd_header}>
-              <label htmlFor="parameterTitle">Parameter başlığı daxil edin *</label>
-              <input
-                id="parameterTitle"
-                name="parameterTitle"
-                type="text"
-                placeholder="Parameter başlığı "
-                className={style.componentAdd_header_input}
-                required
-                onChange={handleChange}
-                value={formData.parameterTitle}
-              />
-            </div>
-            <div className={style.componentAdd_bottom}>
-              <button type="submit" className={style.componentAdd_bottom_btn}>
-                Parameter Əlavə et
-              </button>
-            </div>
-          </form>
+                  {data1.map((parameterType) => (
+                    <option key={parameterType.parameterTypeId} value={parameterType.parameterTypeId}>
+                      {parameterType.parameterTypeTitle}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={style.componentAdd_header}>
+                <label htmlFor="isCategory">Parameteriniz globaldırmı? *</label>
+                <select
+                  name="isCategory"
+                  id="isCategory"
+                  className={style.componentAdd_header_input}
+                  onChange={handleChange}
+                  value={formData.isCategory}
+                >
+                  <option value="" disabled>
+                    --Global parametr seçin--
+                  </option>
+                  <option value="Beli">Bəli</option>
+                  <option value="Xeyir">Xeyir</option>
+                </select>
+              </div>
+              <div className={style.componentAdd_header}>
+                <label htmlFor="parentParameterId">ParametrId *</label>
+                <input
+                  id="parentParameterId"
+                  name="parentParameterId"
+                  type="text"
+                  placeholder="Bunu həmişə null daxil edin"
+                  className={style.componentAdd_header_input}
+                  onChange={handleChange}
+                  value={formData.parentParameterId}
+                />
+              </div>
+              <div className={style.componentAdd_header}>
+                <label htmlFor="parameterLogo">Parameter üçün link daxil edin *</label>
+                <input
+                  id="parameterLogo"
+                  name="parameterLogo"
+                  type="text"
+                  placeholder="Parameter ünvanı"
+                  className={style.componentAdd_header_input}
+                  required
+                  onChange={handleChange}
+                  value={formData.parameterLogo}
+                />
+              </div>
+              <div className={style.componentAdd_header}>
+                <label htmlFor="languageId">Dili seçin *</label>
+                <select
+                  name="languageId"
+                  id="languageId"
+                  className={style.componentAdd_header_input}
+                  onChange={handleChange}
+                  value={formData.languageId}
+                >
+                  <option value={1}>English</option>
+                  <option value={2}>Azerbaijan</option>
+                  <option value={3}>Russian</option>
+                </select>
+              </div>
+              <div className={style.componentAdd_header}>
+                <label htmlFor="parameterTitle">Parameter başlığı daxil edin *</label>
+                <input
+                  id="parameterTitle"
+                  name="parameterTitle"
+                  type="text"
+                  placeholder="Parameter başlığı "
+                  className={style.componentAdd_header_input}
+                  required
+                  onChange={handleChange}
+                  value={formData.parameterTitle}
+                />
+              </div>
+              <div className={style.componentAdd_bottom}>
+                <button type="submit" className={style.componentAdd_bottom_btn}>
+                  Parameter Əlavə et
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

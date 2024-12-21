@@ -1,3 +1,24 @@
+.cityAdd_container{
+    display: flex;
+}
+
+.cityAdd_main{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.cityAdd_main_icon{
+    position: absolute;
+    font-size: 20px;
+    z-index: 5;
+    top: 18%;
+    left: 4%;
+    color: white;
+    cursor: pointer;
+}
+
 .cityAdd{
     background: white;
     padding: 20px;
@@ -10,7 +31,7 @@
 }
 
 .cityAdd_header{
-    display: flex;
+    display: flex; 
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -23,8 +44,6 @@
 }
 
 .cityAdd_main{
-    margin:40px 0;
-    padding: 20px 0;
     display: flex;
     justify-content: space-between;
     height: 300px;
@@ -62,10 +81,10 @@
 .cityAdd_bottom_btn{
     padding:20px 60px;
     border: none;
-    background: blue;
-    color: white;
+    color: red;
   border-radius: 4px;
   margin-bottom: 40px;
+  font-weight: bold;
 }
 
 @media screen and (max-width:768px) {

@@ -1,6 +1,7 @@
 .adminPanel_header_container{
     background-color: #2A2036;
     margin-bottom: 40px;
+    display: flex;
 }
 
 .adminPanel_header{
@@ -11,9 +12,8 @@
     color: white;
 }
 
-.adminPanel_header_icon{
-    font-size: 20px;
-    cursor: pointer;
+.adminPanel_header_icon_bar{
+   visibility: hidden;
 }
 
 .adminPanel_header_inputBox{

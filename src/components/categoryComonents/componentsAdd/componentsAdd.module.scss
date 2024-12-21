@@ -1,3 +1,6 @@
+.componentsAdd_container{
+    display: flex;
+}
 .componentAdd{
     background: white;
     padding: 20px;
@@ -70,6 +73,26 @@
     color: white;
   border-radius: 4px;
   margin-bottom: 40px;
+}
+
+.componentsAdd_main {
+    width: 100%;
+    height: calc(100vh - 10px); /* Adjust based on header and other spacing */
+    overflow-y: auto; /* Show scroll only when content overflows */
+    overflow-x: hidden; 
+    position: relative;
+    white-space: nowrap;
+}
+
+
+.componentsAdd_main_icon{
+    position: absolute;
+    font-size: 20px;
+    z-index: 5;
+    top: 6%;
+    left: 4%;
+    color: white;
+    cursor: pointer;
 }
 
 @media screen and (max-width:768px) {
