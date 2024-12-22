@@ -15,7 +15,7 @@ const ComponentsAdd = () => {
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-    const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+    const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
 
   const handleCategoryChange = (event) => {
     setParentId(event.target.value); 

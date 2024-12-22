@@ -19,7 +19,7 @@ const CityComponent = ({ id }) => {
   const [filteredParameters, setFilteredParameters] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedParameterId, setSelectedParameterId] = useState(null);
-  const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+  const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
   
   const navigate = useNavigate();
 

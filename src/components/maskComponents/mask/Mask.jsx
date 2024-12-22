@@ -13,7 +13,7 @@ const Mask = () => {
   const navigate = useNavigate();
   const [parameters, setParameters] = useState([]);
   const [loading, setLoading] = useState(true);
-    const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+    const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
 
   useEffect(() => {
     const fetchParameters = async () => {

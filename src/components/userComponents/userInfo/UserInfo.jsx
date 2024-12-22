@@ -11,7 +11,7 @@ const UserInfo = () => {
   const navigate = useNavigate();
   const [deleteBox, setDeleteBox] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+  const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
   const [editDataList, setEditDataList] = useState([
     { id: '54', status: 'true', weight: '526', img: 'true', slug: 'true' },
   ]);

@@ -12,7 +12,7 @@ const UsersPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-      const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+      const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
 
   const navigate = useNavigate();
 

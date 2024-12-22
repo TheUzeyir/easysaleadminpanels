@@ -16,7 +16,7 @@ const Parameters = ({ id }) => {
   const [parameters, setParameters] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedParameterId, setSelectedParameterId] = useState(null);
-        const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+        const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
   
   const navigate = useNavigate();
 

@@ -11,7 +11,7 @@ import ParametrBar from '../../layout/parametrBar/ParametrBar';
 
 const ProductComponent = () => {
   const [data, setData] = useState([]);
-      const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+      const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
 
   const navigate = useNavigate();
 
