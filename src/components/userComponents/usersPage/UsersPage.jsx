@@ -89,23 +89,21 @@ const UsersPage = () => {
             <div className={style.componentsPage_bottom}>
               <div className={style.componentsPage_bottom_header}>
                 <p className={style.componentsPage_bottom_header_title}>ID</p>
-                <p className={style.componentsPage_bottom_header_title}>İstifadəçi Adı</p>
-                <p className={style.componentsPage_bottom_header_title}>İstifadəçinin Adı</p>
-                <p className={style.componentsPage_bottom_header_title}>İstifadəçinin Soyadı</p>
+                <p className={style.componentsPage_bottom_header_title}>İstifadəçi Adı və Soyadı</p>
                 <p className={style.componentsPage_bottom_header_title}>E-Poçt</p>
+                <p className={style.componentsPage_bottom_header_title}>Nömrə</p>
                 <p className={style.componentsPage_bottom_header_title}>Dəyişiklər</p>
               </div>
               <div className={style.componentsPage_bottom_main_container}>
                 {filteredUsers.map((user) => (
                   <div key={user.userId} className={style.componentsPage_bottom_main}>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{user.userId}</p>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{user.userName}</p>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{user.userFirstName}</p>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{user.userLastName}</p>
-                    <p className={style.componentsPage_bottom_main_productTitle}>{user.userEmail}</p>
+                    <p style={{width:"20.7%"}} className={style.componentsPage_bottom_main_productTitle}>{user.userId}</p>
+                    <p style={{width:"20.7%"}} className={style.componentsPage_bottom_main_productTitle}>{user.userName}</p>
+                    <p style={{width:"20.7%"}} className={style.componentsPage_bottom_main_productTitle}>{user.userEmail}</p>
+                    <p style={{width:"20.7%"}} className={style.componentsPage_bottom_main_productTitle}>{user.userPhone}</p>
                     <div className={style.componentsPage_bottom_main_iconBox}>
                       <FaTrash
-                        className={style.componentsPage_bottom_main_iconBox_icon}
+                        style={{marginLeft:"10px"}} className={style.componentsPage_bottom_main_iconBox_icon}
                         onClick={() => handleDeleteUser(user.userId)}
                       />
                     </div>

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { FaPhoneAlt, FaHeart, FaFlag } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { PiWarningCircleFill } from "react-icons/pi";
-import { useNavigate, useParams } from 'react-router-dom';
 import { FcOk } from "react-icons/fc";
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import style from "./productDetail.module.css";
 import Header from '../../layout/header/Header';
 
 const ProductDetail = () => {
-    const [openComplaintBox, setOpenComplaintBox] = useState(false);
     const [product, setProduct] = useState({});
+    const [message, setMessage] = useState(""); // Adminin rəyini saxlamaq üçün state
     const { id } = useParams();  
     const navigate = useNavigate();
 
@@ -23,8 +23,6 @@ const ProductDetail = () => {
                     );
                     if (response.data.isSuccessful) {
                         setProduct(response.data.data);
-                        console.log(response.data.data);
-                        
                     } else {
                         console.error("Ürün bulunamadı:", response.data.message);
                     }
@@ -38,8 +36,64 @@ const ProductDetail = () => {
         }
     }, [id]);
 
-    const toggleComplaintBox = () => {
-        setOpenComplaintBox(prev => !prev);
+    // Testiq et düyməsinə kliklədikdə çağırılacaq funksiya
+    const handleApprove = async () => {
+        console.log(product.productId);
+        
+        const data = {
+            productId: product.productId, // productId göndərilir
+            productStatusId: 2, // Testiq et üçün status 2
+            productNotificationTranslates: [
+                {
+                    languageId: 1,
+                    productNotificationTitle: message, // Adminin rəyi
+                }
+            ]
+        };
+
+        try {
+            const response = await axios.post(
+                "https://restartbaku-001-site4.htempurl.com/api/Product/change-product-status",
+                data
+            );
+            if (response.data.isSuccessful) {
+                alert("Ürün təsdiq edildi!");
+            } else {
+                alert("Təsdiq edilərkən xəta baş verdi: " + response.data.message);
+            }
+        } catch (error) {
+            console.error("API xətası:", error);
+            alert("Xəta baş verdi! Lütfən sonra yenidən cəhd edin.");
+        }
+    };
+
+    // Redd et düyməsinə kliklədikdə çağırılacaq funksiya
+    const handleReject = async () => {
+        const data = {
+            productId: product.productId, // productId göndərilir
+            productStatusId: 1, // Redd et üçün status 1
+            productNotificationTranslates: [
+                {
+                    languageId: 1,
+                    productNotificationTitle: message, // Adminin rəyi
+                }
+            ]
+        };
+
+        try {
+            const response = await axios.post(
+                "https://restartbaku-001-site4.htempurl.com/api/Product/change-product-status",
+                data
+            );
+            if (response.data.isSuccessful) {
+                alert("Ürün reddedildi!");
+            } else {
+                alert("Redd edilməkdə xəta baş verdi: " + response.data.message);
+            }
+        } catch (error) {
+            console.error("API xətası:", error);
+            alert("Xəta baş verdi! Lütfən sonra yenidən cəhd edin.");
+        }
     };
 
     return (
@@ -53,6 +107,7 @@ const ProductDetail = () => {
                     <div className={style.detailPage_main}>
                         <div className={style.detailPage_main_head}>
                             <div className={style.detailPage_main_head_left}>
+                                {/* Display Main Image */}
                                 <div className={style.detailPage_main_head_left_mainImgBox}>
                                     <img
                                         src={product.coverImage || ""}
@@ -60,12 +115,14 @@ const ProductDetail = () => {
                                         className={style.detailPage_main_head_left_mainImgBox_img}
                                     />
                                 </div>
+
+                                {/* Display Gallery Images */}
                                 <div className={style.detailPage_main_head_left_slideImgBox}>
                                     {product.productGalleries && product.productGalleries.map((gallery, index) => (
                                         <img
                                             key={index}
                                             src={gallery.productGalleryFile}
-                                            alt={`Slide ${index + 1}`}
+                                            alt={`Gallery Image ${index + 1}`}
                                             className={style.detailPage_main_head_left_slideImgBox_img}
                                         />
                                     ))}
@@ -73,47 +130,52 @@ const ProductDetail = () => {
                             </div>
                             <div className={style.detailPage_main_head_right}>
                                 <h4 className={style.detailPage_main_head_right_humanName}>
-                                    {product.productTranslates?.[0]?.productTitle || "Unknown Seller"}
+                                    {product.productTranslates?.[0]?.productTitle || "Unknown Product"}
                                 </h4>
-                                <p className={style.detailPage_main_head_right_phone}>
-                                    <FaPhoneAlt className={style.detailPage_main_head_right_phone_icon} /> 
-                                    0504002200 {/* Telefon məlumatı gəlmədiyi üçün bu statik saxlanılıb */}
-                                </p>
-                                <button className={style.detailPage_main_head_right_btn_ok}>
+
+                                {/* Adminin rəyini yazması üçün textarea */}
+                                <textarea
+                                    className={style.detailPage_main_head_right_textarea}
+                                    placeholder="Admin rəyi və ya təsdiq mesajı..."
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                ></textarea>
+
+                                <button className={style.detailPage_main_head_right_btn_ok} onClick={handleApprove}>
                                     <FcOk /> Testiq et
                                 </button>
-                                <button className={style.detailPage_main_head_right_btn_reject}>
+                                <button className={style.detailPage_main_head_right_btn_reject} onClick={handleReject}>
                                     <PiWarningCircleFill /> Redd et
-                                </button> 
+                                </button>
+
                                 <p className={style.detailPage_main_head_right_otherSale}>Satıcının bütün elanlarını gör</p>
                             </div>
-                        </div> 
+                        </div>
                         <div className={style.detailPage_main_bottom}>
                             <div className={style.detailPage_main_bottom_left}>
-                                {Object.entries(product).map(([key, value]) => (
-                                    <div key={key} className={style.detailPage_main_bottom_left_box}>
-                                        <span>{key}:</span> <span>{typeof value === 'object' ? JSON.stringify(value) : value}</span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className={style.detailPage_main_bottom_right}>
-                                <p>Elanın nömrəsi: {product.productId || "2221"}</p>
-                                <p>Günlük icarəyə verilir.</p>
-                                <div className={style.detailPage_main_bottom_right_card}>
-                                    <p className={style.detailPage_main_bottom_right_card_title}>
-                                        <FaHeart className={style.detailPage_main_bottom_right_card_title_icon} /> Bəyənilənlərə əlavə et
-                                    </p>
-                                    <p className={style.detailPage_main_bottom_right_card_subtitle} onClick={toggleComplaintBox}>
-                                        <FaFlag className={style.detailPage_main_bottom_right_card_subtitle_icon} /> Şikayət et
-                                    </p>
-                                    {openComplaintBox && (
-                                        <div className={style.detailPage_main_bottom_right_card_complaintBox_container}>
-                                            <div className={style.detailPage_main_bottom_right_card_complaintBox}>
-                                                <textarea placeholder="Şikayət mətni" />
-                                                <button className={style.detailPage_main_bottom_right_card_complaintBox_btn}>Göndər</button>
-                                            </div>
-                                        </div>
-                                    )}
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>Product ID:</span> <span>{product.productId}</span>
+                                </div>
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>Title:</span> <span>{product.productTranslates?.[0]?.productTitle}</span>
+                                </div>
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>Description:</span> <span>{product.productTranslates?.[0]?.productDescription}</span>
+                                </div>
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>Price:</span> <span>{product.price} {product.currencyId === 1 ? "AZN" : "USD"}</span>
+                                </div>
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>Slug:</span> <span>{product.slug}</span>
+                                </div>
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>Product Weight:</span> <span>{product.productWeight} kg</span>
+                                </div>
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>View Count:</span> <span>{product.viewCount}</span>
+                                </div>
+                                <div className={style.detailPage_main_bottom_left_box}>
+                                    <span>Created At:</span> <span>{new Date(product.createDate).toLocaleString()}</span>
                                 </div>
                             </div>
                         </div>

@@ -23,10 +23,10 @@ const ParametrBar = ({ hideBar }) => {
     <div className={style.headerSideBar}>
       <div className={style.headerSideBar_header}>
         <span className={style.headerSideBar_logo}>JetEvimAdmin</span>
-        <FaBars
+        {/* <FaBars
           className={style.headerSideBar_header_icon}
           onClick={hideBar}
-        />
+        /> */}
       </div>
       <p className={style.headerSideBar_title}>Bütün səhifələr</p>
       <div className={style.headerSideBar_title_card}>
