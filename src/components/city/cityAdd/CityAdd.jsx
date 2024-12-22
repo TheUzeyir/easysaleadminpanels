@@ -13,7 +13,7 @@ const CityAdd = () => {
   const [orderWeight, setOrderWeight] = useState('0');
   const [cities, setCities] = useState([]); 
   const navigate = useNavigate();
-  const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+  const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
 
   useEffect(() => {
     const fetchCities = async () => {

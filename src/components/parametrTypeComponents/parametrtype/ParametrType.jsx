@@ -15,7 +15,7 @@ const ParametrType = () => {
   const [loading, setLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-      const [isParametrBarVisible, setIsParametrBarVisible] = useState(false); 
+      const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
   const navigate=useNavigate()
 
   useEffect(() => {
