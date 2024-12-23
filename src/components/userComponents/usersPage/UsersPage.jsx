@@ -12,7 +12,7 @@ const UsersPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-      const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
+  const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
 
   const navigate = useNavigate();
 
@@ -38,6 +38,9 @@ const UsersPage = () => {
   }, []);
 
   const handleDeleteUser = async (id) => {
+    const confirmDelete = window.confirm('İstifadəçini silmək istədiyinizə əminsinizmi?');
+    if (!confirmDelete) return;
+
     try {
       const response = await fetch(`https://restartbaku-001-site4.htempurl.com/api/User/delete-user/${id}`, {
         method: 'DELETE',

@@ -36,7 +36,6 @@ const ProductDetail = () => {
         }
     }, [id]);
 
-    // Testiq et düyməsinə kliklədikdə çağırılacaq funksiya
     const handleApprove = async () => {
         console.log(product.productId);
         
@@ -58,6 +57,7 @@ const ProductDetail = () => {
             );
             if (response.data.isSuccessful) {
                 alert("Ürün təsdiq edildi!");
+                navigate(-1);
             } else {
                 alert("Təsdiq edilərkən xəta baş verdi: " + response.data.message);
             }
