@@ -80,7 +80,7 @@ const ProductComponent = () => {
                   <p className={style.componentsPage_bottom_main_productParentId}>
                     {item.productId}
                   </p>
-                  <p className={style.componentsPage_bottom_main_productParentId}>
+                  <p className={style.componentsPage_bottom_main_products}>
                   {item.productTitle}
                   </p>
                   {item.productStatusId === 1 && (
