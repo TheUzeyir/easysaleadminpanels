@@ -66,6 +66,7 @@ const ProductComponent = () => {
             </div>
             <div className={style.componentsPage_bottom}>
               <div className={style.componentsPage_bottom_header}>
+                <p className={style.componentsPage_bottom_header_title}>Product Id</p>
                 <p className={style.componentsPage_bottom_header_title}>Product</p>
                 <p className={style.componentsPage_bottom_header_title}>Status</p>
                 <p className={style.componentsPage_bottom_header_title}>Action</p> 
@@ -77,7 +78,10 @@ const ProductComponent = () => {
                   onClick={() => handleProductClick(item.productId)}
                 >
                   <p className={style.componentsPage_bottom_main_productParentId}>
-                    {item.productTitle}
+                    {item.productId}
+                  </p>
+                  <p className={style.componentsPage_bottom_main_productParentId}>
+                  {item.productTitle}
                   </p>
                   {item.productStatusId === 1 && (
                     <button className={style.componentsPage_bottom_main_btn}>
