@@ -11,19 +11,12 @@ import ParametrBar from '../../layout/parametrBar/ParametrBar';
 
 const ProductComponent = () => {
   const [data, setData] = useState([]);
-      const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
-
+  const [isParametrBarVisible, setIsParametrBarVisible] = useState(true);
   const navigate = useNavigate();
 
-  const clickTrashBox = (productId) => {
-    setData((prevData) => prevData.filter((item) => item.productId !== productId));
-  };
-
-  useEffect(() => {
+  const fetchProducts = () => {
     axios
-      .get(
-        "https://restartbaku-001-site4.htempurl.com/api/Product/search"
-      )
+      .get("https://restartbaku-001-site4.htempurl.com/api/Product/search")
       .then((response) => {
         if (response.data.isSuccessful && response.data.data.items) {
           setData(response.data.data.items);
@@ -32,17 +25,38 @@ const ProductComponent = () => {
         }
       })
       .catch((error) => console.error("API hatası:", error));
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
+
+  const clickTrashBox = (productId) => {
+    if (window.confirm("Bu məhsulu silmək istədiyinizdən əminsiniz?")) {
+      axios
+        .delete(`https://restartbaku-001-site4.htempurl.com/api/Product/delete-product/${productId}`)
+        .then((response) => {
+          if (response.data.isSuccessful) {
+            alert("Məhsul uğurla silindi.");
+            setData((prevData) => prevData.filter((item) => item.productId !== productId));
+          } else {
+            console.error("Silinmə uğursuz oldu:", response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.error("API hatası:", error);
+          alert("Məhsul silinərkən xəta baş verdi.");
+        });
+    }
+  };
 
   const handleProductClick = (productId) => {
     navigate(`/product-detail/${productId}`);
-
   };
 
   const toggleParametrBar = () => {
-    setIsParametrBarVisible(!isParametrBarVisible); 
+    setIsParametrBarVisible(!isParametrBarVisible);
   };
-
 
   return (
     <div className={style.componentsPage_container}>
@@ -69,7 +83,7 @@ const ProductComponent = () => {
                 <p className={style.componentsPage_bottom_header_title}>Product Id</p>
                 <p className={style.componentsPage_bottom_header_title}>Product</p>
                 <p className={style.componentsPage_bottom_header_title}>Status</p>
-                <p className={style.componentsPage_bottom_header_title}>Action</p> 
+                <p className={style.componentsPage_bottom_header_title}>Action</p>
               </div>
               {data.map((item) => (
                 <div
@@ -81,7 +95,7 @@ const ProductComponent = () => {
                     {item.productId}
                   </p>
                   <p className={style.componentsPage_bottom_main_productParentId}>
-                  {item.productTitle}
+                    {item.productTitle}
                   </p>
                   {item.productStatusId === 1 && (
                     <button className={style.componentsPage_bottom_main_btn}>
@@ -110,6 +124,6 @@ const ProductComponent = () => {
       </div>
     </div>
   );
-}; 
+};
 
 export default ProductComponent;
