@@ -50,14 +50,15 @@ const ComponentsAdd = () => {
           },
         }
       );
-
-      if (response.status === 200) {
-        setMessage('Category created successfully!');
+      if (response.status === 201) {
+        alert('Kategoriya əlavə olundu');
+        setMessage('Kategoriya əlavə edildi');
         setParentId('');
         setCategoryTitle('');
         setImageBase64('');
         navigate(-1);
-      } else {
+      }
+       else {
         setMessage('Failed to create category. Please try again.');
       }
     } catch (error) {
