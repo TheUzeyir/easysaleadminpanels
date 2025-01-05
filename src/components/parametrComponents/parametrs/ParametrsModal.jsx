@@ -24,7 +24,7 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
     };
 
     try {
-      const response = await fetch('http://restartbaku-001-site4.htempurl.com/api/ParameterMask/create-parameter-mask', {
+      const response = await fetch('https://restartbaku-001-site4.htempurl.com/api/ParameterMask/create-parameter-mask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
