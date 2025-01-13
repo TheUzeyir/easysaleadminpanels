@@ -33,7 +33,7 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
       });
 
       if (response.ok) {
-        alert("Parameter mask saved successfully.");
+        alert("Parameter Mask əlavə edildi.");
         onClose(); 
       } else {
         alert("Error saving parameter mask.");
@@ -50,13 +50,13 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
     <div className={style.backdrop} onClick={onClose}>
       <div className={style.ParametrsModal} onClick={(e) => e.stopPropagation()}>
         <div className={style.ParametrsModal_header}>
-          <p>Update Component</p>
+          <p>Mask əlavə edin</p>
           <IoCloseCircle className={style.ParametrsModal_header_icon} onClick={onClose} />
         </div>
         <div className={style.ParametrsModal_card}>
-          <span className={style.ParametrsModal_card_text}>ParametrId</span>
+          <span className={style.ParametrsModal_card_text}>Parameter İd-si</span>
           <input
-            placeholder='Enter ParametrId'
+            placeholder='Parameter İd-sin daxil edin '
             required
             type="text"
             className={style.ParametrsModal_card_input}
@@ -65,9 +65,9 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
           />
         </div>
         <div className={style.ParametrsModal_card}>
-          <span className={style.ParametrsModal_card_text}>parameterMaskData</span>
+          <span className={style.ParametrsModal_card_text}>Maskın dəyəri</span>
           <input
-            placeholder='Enter parameterMaskData'
+            placeholder='Maskın dəyərin daxil edin '
             required
             type="text"
             className={style.ParametrsModal_card_input}
@@ -76,7 +76,7 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
           />
         </div>
         <div className={style.ParametrsModal_card_form}>
-          <label className={style.ParametrsModal_card_text} htmlFor="parentId">ParentId</label>
+          <label className={style.ParametrsModal_card_text} htmlFor="parentId">Parent İd</label>
           <select
             id="parentId"
             className={style.ParametrsModal_card_input}
@@ -87,7 +87,7 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
           </select>
         </div>
         <div className={style.ParametrsModal_card_form}>
-          <label className={style.ParametrsModal_card_ftext} htmlFor="language">Choose Language:</label>
+          <label className={style.ParametrsModal_card_ftext} htmlFor="language">Dil seçin:</label>
           <select
             id="language"
             className={style.ParametrsModal_card_input}
@@ -104,7 +104,7 @@ const ParametrsModal = ({ onClose, parameterId: initialParameterId }) => {
           onClick={handleSave}
           disabled={isSaving}
         >
-          {isSaving ? "Saving..." : "Save"}
+          {isSaving ? "yadda saxlanır..." : "Əlavə et"}
         </button>
       </div>
     </div>

@@ -13,7 +13,7 @@ const Mask = () => {
   const navigate = useNavigate();
   const [parameters, setParameters] = useState([]);
   const [loading, setLoading] = useState(true);
-    const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
+  const [isParametrBarVisible, setIsParametrBarVisible] = useState(true); 
 
   useEffect(() => {
     const fetchParameters = async () => {
@@ -52,7 +52,7 @@ const Mask = () => {
 
   const handleDeleteMask = async (parameterId, maskId) => {
     try {
-      const deleteResponse = await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/ParameterMask/delete-parameter-mask/${maskId}`);
+      await axios.delete(`https://restartbaku-001-site4.htempurl.com/api/ParameterMask/delete-parameter-mask/${maskId}`);
       
       setParameters(prevParameters =>
         prevParameters.map(param => {
@@ -66,6 +66,7 @@ const Mask = () => {
         })
       );
 
+      alert(`Mask uğurla silindi!`);
       console.log(`Mask with id ${maskId} deleted successfully.`);
     } catch (error) {
       console.error('Error deleting mask:', error);
@@ -75,7 +76,6 @@ const Mask = () => {
   const toggleParametrBar = () => {
     setIsParametrBarVisible(!isParametrBarVisible); 
   };
-
 
   return (
     <div className={style.componentsPage_container}>

@@ -134,11 +134,11 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
       <div className={style.backdrop} onClick={handleClose}>
         <div className={style.componentsUpdate} onClick={(e) => e.stopPropagation()}>
           <p onClick={onClose} className={style.componentsUpdate_title}>
-            Update Component <IoClose className={style.componentsUpdate_title_icon} />
+            Kategoriya Yeniləmək <IoClose className={style.componentsUpdate_title_icon} />
           </p>
 
           {loading ? (
-            <p>Loading category data...</p>
+            <p>katagoriyalar yüklənir...</p>
           ) : (
             <>
               <div className={style.languageTabs}>
@@ -158,7 +158,7 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
                 value={categoryTitle}
                 onChange={(e) => setCategoryTitle(e.target.value)}
                 className={style.componentsUpdate_input}
-                placeholder={`Update Category Title (${activeLanguage.toUpperCase()})`}
+                placeholder={`Kategoriya başlığı (${activeLanguage.toUpperCase()})`}
                 required
               />
               <button
@@ -166,7 +166,7 @@ const ComponentsUpdate = ({ item, onUpdateSuccess, onClose }) => {
                 onClick={handleUpdate}
                 disabled={isSaving}
               >
-                {isSaving ? 'Saving...' : 'Save'}
+                {isSaving ? 'yüklənir...' : 'Save'}
               </button>
             </>
           )}
